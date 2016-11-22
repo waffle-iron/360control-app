@@ -1,0 +1,65 @@
+<ion-view title="{{serve.nome}}" view-cache="false">
+
+    <ion-nav-bar class="bar-royal">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content padding="true" class="has-header">
+        <div class="list card">
+            <ion-item class="item-avatar item-icon-right"ui-sref="men.editarPDV">
+                <img src="{{pdv.url}}">
+                <h2>{{pdv.nome}}</h2>
+                <p>{{pdv.endereco}}</p>
+                <i class="icon ion-edit icon-accessory"></i>
+            </ion-item>
+        </div>
+        <h3 style="color:#000000;text-align:center;">{{serve.nome}}</h3>
+        <ion-list ng-show="serve.contem_fotos">
+            <ion-item class="item-avatar item-icon-right" ui-sref="men.foto">
+                <img>
+                <h2>Antes</h2>
+                <p>Registro Fotográfico</p>
+                <i class="icon ion-ios-camera"></i>
+            </ion-item>
+            <ion-item class="item-avatar item-icon-right" ui-sref="men.foto">
+                <img>
+                <h2>Después</h2>
+                <p>Registro Fotográfico</p>
+                <i class="icon ion-ios-camera"></i>
+            </ion-item>
+        </ion-list>
+        <div class="spacer" style="width: 300px; height: 21px;"></div>
+        <div class="branco">
+            <form class="list">
+                <label class="item item-input item-stacked-label background: #ffc">
+                    <span class="input-label">Observación</span>
+                    <input type="text" placeholder="Campo de texto">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Pendiente interna</span>
+                    <input type="text" placeholder="Campo de texto">
+                </label>
+            </form>
+        </div>
+        <form class="list">
+            <div class="spacer" style="width: 300px; height: 21px;"></div>
+            <label class="item item-input">
+                <span class="input-label">Fecha</span>
+                <input type="date" placeholder="">
+            </label>
+            <label class="item item-select">
+                <span class="input-label">Status</span>
+                <select>
+                    <option>Terminado</option>
+                    <option>Pendiente</option>
+                    <option>Disminuido</option>
+                </select>
+            </label>
+            <div class="spacer" style="width: 300px; height: 21px;"></div>
+            <a ui-sref="men.checklist" class="button button-balanced  button-block">Guardar</a>
+            <div class="spacer" style="width: 300px; height: 21px;"></div>
+        </form>
+    </ion-content>
+</ion-view>

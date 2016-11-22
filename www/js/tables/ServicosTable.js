@@ -1,0 +1,112 @@
+(function () {
+    'use strict';
+
+    angular.module('starter')
+            .factory('ServicosTable', ['TableModuloFactory',
+                function (TableModuloFactory) {
+
+                    var services = {};
+
+                    services.setTable = function () {
+                        TableModuloFactory.table = 'servicos';
+                        TableModuloFactory.campos = {
+                            id: 'INTEGER PRIMARY KEY AUTOINCREMENT',
+                            nome: 'VARCHAR(500)',
+                            icone: 'VARCHAR(500)',
+                            status: 'INTEGER(1)',
+                            contem_fotos: 'INTEGER(1)'
+                        };
+                    };
+
+                    services.populaBase = function () {
+                        services.setTable();
+                        TableModuloFactory.drop(function (r) {
+                            services.setTable();
+                            TableModuloFactory.init(function (r) {
+                                TableModuloFactory.save({nome: 'Pintura', icone: 'ion-paintbrush', status: 1, contem_fotos: 1}, function (r) {});
+                                TableModuloFactory.save({nome: 'Fachada', icone: 'ion-home', status: 1, contem_fotos: 1}, function (r) {});
+                                TableModuloFactory.save({nome: 'Contador', icone: 'ion-cube', status: 1, contem_fotos: 1}, function (r) {});
+                                TableModuloFactory.save({nome: 'Positivación Ambev', icone: 'ion-wand', status: 1, contem_fotos: 0}, function (r) {});
+                            });
+                        });
+                    };
+
+                    services.drop = function (r) {
+                        services.setTable();
+                        TableModuloFactory.drop(r);
+                    };
+
+                    services.init = function (r) {
+                        services.setTable();
+                        TableModuloFactory.init(r);
+                    };
+
+                    services.create = function (r) {
+                        services.setTable();
+                        TableModuloFactory.create(r);
+                    };
+
+                    services.getColumm = function (r) {
+                        services.setTable();
+                        TableModuloFactory.getColumm(r);
+                    };
+
+                    services.save = function (o, r) {
+                        services.setTable();
+                        TableModuloFactory.save(o, r);
+                    };
+
+                    services.insert = function (o, r) {
+                        services.setTable();
+                        TableModuloFactory.insert(o, r);
+                    };
+
+                    services.replace = function (o, r) {
+                        services.setTable();
+                        TableModuloFactory.replace(o, r);
+                    };
+
+                    services.update = function (o, r) {
+                        services.setTable();
+                        TableModuloFactory.update(o, r);
+                    };
+
+                    services.get = function (v, r) {
+                        services.setTable();
+                        TableModuloFactory.get(v, r);
+                    };
+
+                    services.first = function (o, r) {
+                        services.setTable();
+                        TableModuloFactory.first(o, r);
+                    };
+
+                    services.all = function (o, r) {
+                        services.setTable();
+                        TableModuloFactory.all(o, r);
+                    };
+
+                    services.deleteAll = function (o, r) {
+                        services.setTable();
+                        TableModuloFactory.deleteAll(o, r);
+                    };
+
+                    services.count = function (r) {
+                        services.setTable();
+                        TableModuloFactory.count(r);
+                    };
+
+                    services.delete = function (c, v, r) {
+                        services.setTable();
+                        TableModuloFactory.delete(c, v, r);
+                    };
+
+                    services.query = function (q, r, p) {
+                        services.setTable();
+                        TableModuloFactory.query(q, r, p);
+                    };
+
+                    return services;
+                }
+            ]);
+})();
