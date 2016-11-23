@@ -5,7 +5,7 @@
             .factory('TableModuloFactory', ['Config', 'ValidacaoModuloFactory',
                 function (Config, ValidacaoModuloFactory) {
                     var db = openDatabase(Config.database + ".db", "1", "Test DB", 100 * 1024 * 1024);
-                    
+
                     var services = {};
 
                     services.table = null;
@@ -14,11 +14,15 @@
                     services.campos = null;
 
                     services.drop = function (retorno) {
-                        
+
                         var sql = 'DROP TABLE ' + services.table + ';';
                         services.query(sql, function (e) {
                             services.create(retorno);
                         });
+                    };
+
+                    services.campoExist = function (c) {
+                        return !!services.campos[c];
                     };
 
                     services.init = function (retorno) {
@@ -42,7 +46,7 @@
                         angular.forEach(services.campos, function (value, key) {
                             campos.push(key + ' ' + value);
                         });
-                        
+
                         var sql = 'CREATE TABLE IF NOT EXISTS ' + services.table + ' (' + campos.join(', ') + ');';
 
                         services.query(sql, function (e) {
@@ -98,17 +102,19 @@
                         var value = [];
                         var _value = [];
                         angular.forEach(options, function (v, k) {
-                            if (!ValidacaoModuloFactory.empty(v) || ValidacaoModuloFactory.is_numeric(v)) {
-                                key.push(k);
-                                if (ValidacaoModuloFactory.empty(v) && !ValidacaoModuloFactory.is_numeric(v)) {
-                                    value.push('');
-                                } else {
-                                    value.push(ValidacaoModuloFactory.trim(v));
+                            if (services.campoExist(k)) {
+                                if (!ValidacaoModuloFactory.empty(v) || ValidacaoModuloFactory.is_numeric(v)) {
+                                    key.push(k);
+                                    if (ValidacaoModuloFactory.empty(v) && !ValidacaoModuloFactory.is_numeric(v)) {
+                                        value.push('');
+                                    } else {
+                                        value.push(ValidacaoModuloFactory.trim(v));
+                                    }
+                                    _value.push('?');
                                 }
-                                _value.push('?');
                             }
                         });
-                        
+
                         var query = "INSERT INTO " + services.table + " (" + key.join(', ') + ") VALUES (" + _value.join(', ') + ");";
                         services.query(query, function (res) {
                             if (res !== null) {
@@ -126,13 +132,15 @@
                         var value = [];
                         var _value = [];
                         angular.forEach(options, function (v, k) {
-                            if (!ValidacaoModuloFactory.empty(v) || ValidacaoModuloFactory.is_numeric(v)) {
-                                key.push(k);
-                                value.push(ValidacaoModuloFactory.trim(v));
-                                _value.push('?');
+                            if (services.campoExist(k)) {
+                                if (!ValidacaoModuloFactory.empty(v) || ValidacaoModuloFactory.is_numeric(v)) {
+                                    key.push(k);
+                                    value.push(ValidacaoModuloFactory.trim(v));
+                                    _value.push('?');
+                                }
                             }
                         });
-                        
+
                         var query = "INSERT OR REPLACE INTO " + services.table + " (" + key.join(', ') + ") VALUES (" + _value.join(', ') + ");";
                         services.query(query, function (res) {
                             if (res !== null) {
@@ -147,18 +155,20 @@
                         var key = [];
                         var value = [];
                         angular.forEach(options, function (v, k) {
-                            if (k !== 'id') {
-                                if (ValidacaoModuloFactory.empty(v) && !ValidacaoModuloFactory.is_numeric(v)) {
-                                    key.push(k + '=?');
-                                    value.push(null);
-                                } else {
-                                    key.push(k + '=?');
-                                    value.push(v);
+                            if (services.campoExist(k)) {
+                                if (k !== 'id') {
+                                    if (ValidacaoModuloFactory.empty(v) && !ValidacaoModuloFactory.is_numeric(v)) {
+                                        key.push(k + '=?');
+                                        value.push(null);
+                                    } else {
+                                        key.push(k + '=?');
+                                        value.push(v);
+                                    }
                                 }
                             }
                         });
                         value.push(parseInt(id));
-                        
+
                         var query = "UPDATE " + services.table + " SET " + key.join(', ') + " WHERE id = ?;";
                         services.query(query, function (res) {
                             if (res !== null) {
@@ -170,7 +180,7 @@
                     };
 
                     services.get = function (val, retorno) {
-                        
+
                         var conditions = {
                             from: '*',
                             alias: null,
@@ -191,7 +201,7 @@
                     };
 
                     services.first = function (options, retorno) {
-                        
+
                         var conditions = angular.merge({
                             from: '*',
                             alias: null,
@@ -212,7 +222,7 @@
                     };
 
                     services.all = function (options, retorno) {
-                        
+
                         var conditions = angular.merge({
                             from: '*',
                             alias: null,
@@ -270,7 +280,7 @@
 
 
                     services.deleteAll = function (options, retorno) {
-                        
+
                         var conditions = angular.merge({
                             where: null
                         }, options);
@@ -304,7 +314,7 @@
 
 
                     services.count = function (retorno) {
-                        
+
                         var query = "SELECT COALESCE(COUNT(*), 0) as total FROM " + services.table;
                         services.query(query, function (res) {
                             if (res !== null) {
@@ -317,7 +327,7 @@
                     };
 
                     services.delete = function (chave, valor, retorno) {
-                        
+
                         var query = "DELETE FROM " + services.table + ' WHERE ' + chave + ' = ' + valor;
                         services.query(query, function (res) {
                             if (res !== null) {

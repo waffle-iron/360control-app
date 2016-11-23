@@ -12,7 +12,7 @@ angular.module('starter')
                 } catch (err) {
                     return false;
                 }
-            }
+            };
 
             service.exec = function (options, listener) {
                 if (service.loadCamera()) {
@@ -108,6 +108,7 @@ angular.module('starter')
                     listener(success.nativeURL);
                 }, function (error) {
                 });
-            }
+            };
+            
             return service;
         });

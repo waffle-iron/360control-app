@@ -7,24 +7,17 @@
     </ion-nav-bar>
 
     <ion-content padding="true" class="has-header">
-        <div class="list card">
-            <ion-item class="item-avatar item-icon-right"ui-sref="men.editarPDV">
-                <img src="{{pdv.url}}">
-                <h2>{{pdv.nome}}</h2>
-                <p>{{pdv.endereco}}</p>
-                <i class="icon ion-edit icon-accessory"></i>
-            </ion-item>
-        </div>
-        <h3 style="color:#000000;text-align:center;">{{serve.nome}}</h3>
+        <widget-clientes></widget-clientes>
+        <h3 style="color:#000000; text-align:center;">{{serve.nome}}</h3>
         <ion-list ng-show="serve.contem_fotos">
-            <ion-item class="item-avatar item-icon-right" ui-sref="men.foto">
-                <img>
+            <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_antes')">
+                <img ng-src="{{dados.url_antes}}">
                 <h2>Antes</h2>
                 <p>Registro Fotográfico</p>
                 <i class="icon ion-ios-camera"></i>
             </ion-item>
-            <ion-item class="item-avatar item-icon-right" ui-sref="men.foto">
-                <img>
+            <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_depois')">
+                <img ng-src="{{dados.url_depois}}">
                 <h2>Después</h2>
                 <p>Registro Fotográfico</p>
                 <i class="icon ion-ios-camera"></i>
@@ -35,11 +28,11 @@
             <form class="list">
                 <label class="item item-input item-stacked-label background: #ffc">
                     <span class="input-label">Observación</span>
-                    <input type="text" placeholder="Campo de texto">
+                    <input type="text" ng-model="dados.observacao" placeholder="Campo de texto">
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Pendiente interna</span>
-                    <input type="text" placeholder="Campo de texto">
+                    <input type="text" ng-model="dados.pendencia" placeholder="Campo de texto">
                 </label>
             </form>
         </div>
@@ -47,18 +40,18 @@
             <div class="spacer" style="width: 300px; height: 21px;"></div>
             <label class="item item-input">
                 <span class="input-label">Fecha</span>
-                <input type="date" placeholder="">
+                <input type="date" ng-model="dados.fechamento" placeholder="">
             </label>
             <label class="item item-select">
                 <span class="input-label">Status</span>
-                <select>
-                    <option>Terminado</option>
-                    <option>Pendiente</option>
-                    <option>Disminuido</option>
+                <select ng-model="dados.status">
+                    <option value="1">Terminado</option>
+                    <option value="2">Pendiente</option>
+                    <option value="3">Disminuido</option>
                 </select>
             </label>
             <div class="spacer" style="width: 300px; height: 21px;"></div>
-            <a ui-sref="men.checklist" class="button button-balanced  button-block">Guardar</a>
+            <a ng-click="salvar()" class="button button-balanced  button-block">Guardar</a>
             <div class="spacer" style="width: 300px; height: 21px;"></div>
         </form>
     </ion-content>

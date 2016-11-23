@@ -13,11 +13,12 @@
                             id: 'INTEGER PRIMARY KEY AUTOINCREMENT',
                             usuario_id: 'INTEGER(11)',
                             cliente_id: 'INTEGER(11)',
+                            servico_id: 'INTEGER(11)',
                             observacao: 'TEXT',
                             pendencia: 'TEXT',
                             fechamento: 'VARCHAR(50)',
                             foto_antes: 'TEXT',
-                            foto_despois: 'TEXT',
+                            foto_depois: 'TEXT',
                             status: 'INTEGER(1)'
                         };
                     };
@@ -69,7 +70,11 @@
 
                     services.first = function (o, r) {
                         services.setTable();
-                        TableModuloFactory.first(o, r);
+                        TableModuloFactory.first(o, function (resp) {
+                            resp = ExtraModuloFactory.img(resp, 'foto_antes','url_antes');
+                            resp = ExtraModuloFactory.img(resp, 'foto_depois','url_depois');
+                            r(resp);
+                        });
                     };
 
                     services.all = function (o, r) {

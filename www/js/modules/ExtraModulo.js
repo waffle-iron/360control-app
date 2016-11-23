@@ -16,17 +16,20 @@ angular.module('starter')
                         }
                     };
 
-                    services.img = function (dados, campo) {
-                        debug(dados);
-                        debug(campo);
-                        debug(dados[campo]);
-                        if (ValidacaoModuloFactory.isNotNull(dados[campo])) {
-                            dados.url = dados[campo];
-                            if (services.checkConnection) {
-                                dados.url = 'img/img_wifi.jpg';
+                    services.img = function (dados, campo, alias) {
+                        dados = dados || {};
+                        alias = alias || 'url';
+                        if (ValidacaoModuloFactory.isNotNull(dados)) {
+                            if (ValidacaoModuloFactory.isNotNull(dados[campo])) {
+                                dados[alias] = dados[campo];
+                                if (services.checkConnection) {
+                                    dados[alias] = 'img/img_wifi.jpg';
+                                }
+                            } else {
+                                dados[alias] = 'img/imagem_sem.jpg';
                             }
                         } else {
-                            dados.url = 'img/imagem_sem.jpg';
+                            dados[alias] = 'img/imagem_sem.jpg';
                         }
                         return dados;
                     };

@@ -7,7 +7,7 @@ var debug = function (str) {
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'ngLodash'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angularMoment', 'ngLodash'])
         .constant('Config', {
             //url: 'http://192.168.1.120/homeplay',
             url: 'http://homeplay.agenciavoxel.com.br',
@@ -92,7 +92,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'ngL
                     })
 
                     .state('men.editarPDV', {
-                        url: '/editarPDV',
+                        url: '/editarPDV/:id',
                         views: {
                             'menuContent': {
                                 templateUrl: 'templates/editarPDV.html',
@@ -111,15 +111,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'ngL
                         }
                     })
 
-                    .state('men.editarPDV2', {
-                        url: '/editarPDV2',
-                        views: {
-                            'menuContent': {
-                                templateUrl: 'templates/editarPDV2.html',
-                                controller: 'editarPDV2Ctrl'
-                            }
-                        }
-                    })
 
                     .state('men.servicos', {
                         url: '/servicos/:id/:tipo',
@@ -152,15 +143,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'angularMoment', 'ngL
                         }
                     })
 
-                    .state('men.foto', {
-                        url: '/foto',
-                        views: {
-                            'menuContent': {
-                                templateUrl: 'templates/foto.html',
-                                controller: 'fotoCtrl'
-                            }
-                        }
-                    });
+;
             // if none of the above states are matched, use this as the fallback
             $urlRouterProvider.otherwise('/men/login');
         });

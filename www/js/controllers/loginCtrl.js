@@ -1,4 +1,4 @@
-angular.module('starter').controller('loginCtrl', function ($scope, $stateParams, PdvTable, ServicosTable, UsuariosTable, ValidacaoTable) {
+angular.module('starter').controller('loginCtrl', function ($scope, $stateParams, PdvTable, ServicosTable, UsuariosTable, ValidacaoTable, ServicosRespostasTable) {
     $scope.usuario = {
         username: '',
         password: ''
@@ -8,6 +8,7 @@ angular.module('starter').controller('loginCtrl', function ($scope, $stateParams
     ServicosTable.populaBase();
     UsuariosTable.init(function (r) {});
     ValidacaoTable.init(function (r) {});
+    ServicosRespostasTable.init(function (r) {});
 
 
 });
