@@ -11,7 +11,7 @@
     <ion-content padding="true" class="has-header">
         <widget-clientes></widget-clientes>
         <h3 style="color:#000000; text-align:center;">{{serve.nome}}</h3>
-        <ion-list ng-show="serve.contem_fotos">
+        <ion-list ng-show="serve.contem_fotos > 0">
             <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_antes', 'url_antes')">
                 <img ng-src="{{dados.url_antes}}">
                 <h2>Antes</h2>
@@ -25,6 +25,7 @@
                 <i class="icon ion-ios-camera"></i>
             </ion-item>
         </ion-list>
+        <a  ng-show="serve.contem_fotos < 1" style="font-size:18px;" class="button button-energized button-block icon-left ion-android-camera" href="#/men/tiers/{{id_pdv}}">Registro Fotográfico</a>
         <div class="spacer" style="height: 21px;"></div>
         <form class="list">
             <div class="branco">
@@ -46,9 +47,9 @@
             <label class="item item-select">
                 <span class="input-label">Status</span>
                 <select ng-model="dados.status">
-                    <option value="1">Terminado</option>
-                    <option value="2">Pendiente</option>
-                    <option value="3">Disminuido</option>
+                    <option value="1" {{dados.status_selected_1}}>Terminado</option>
+                    <option value="2" {{dados.status_selected_2}}>Pendiente</option>
+                    <option value="3" {{dados.status_selected_3}}>Disminuido</option>
                 </select>
             </label>
             <div class="spacer" style="height: 21px;"></div>

@@ -8,7 +8,7 @@
                     var services = {};
 
                     services.setTable = function () {
-                        TableModuloFactory.table = 'servicos';
+                        TableModuloFactory.table = 'tiers_itens';
                         TableModuloFactory.campos = {
                             id: 'INTEGER PRIMARY KEY AUTOINCREMENT',
                             tier_id: 'INTEGER(11)',

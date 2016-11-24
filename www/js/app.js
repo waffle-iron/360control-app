@@ -1,7 +1,17 @@
 var _debug = true;
-var debug = function (str) {
-    console.log(JSON.stringify(str));
-}
+var debug = function (val) {
+    if (_debug === true) {
+        if (angular.isObject(val) !== null) {
+            //console.log(JSON.stringify(val));
+            console.log(val);
+        } else if (angular.isArray(val) !== null) {
+            //console.log(JSON.stringify(val));
+            console.log(val);
+        } else {
+            console.log(val);
+        }
+    }
+};
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -10,7 +20,7 @@ var debug = function (str) {
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angularMoment', 'ngLodash'])
         .constant('Config', {
-            url: 'http://192.168.1.35/360control/',
+            url: 'http://192.168.1.42/360control/',
             api: 'api/',
             versaoApp: '01.00.01',
             timeout: 35000,
@@ -162,12 +172,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-                    .state('men.registroFotogrFico', {
-                        url: '/registroFotogrFico',
+                    .state('men.tiers', {
+                        url: '/tiers/:id',
                         views: {
                             'menuContent': {
-                                templateUrl: 'templates/registroFotogrFico.html',
-                                controller: 'registroFotogrFicoCtrl'
+                                templateUrl: 'templates/tiers.html',
+                                controller: 'tiersCtrl'
                             }
                         }
                     })

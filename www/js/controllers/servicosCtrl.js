@@ -18,6 +18,9 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
         foto_depois: '',
         url_depois: '',
         status: 0,
+        status_selected_1: '',
+        status_selected_2: '',
+        status_selected_3: '',
         sincronizado: 0
     };
 
@@ -39,6 +42,9 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
             if (r !== null) {
                 $scope.dados = angular.merge({}, $scope.dados, r);
                 $scope.dados.fechamento = new Date(moment($scope.dados.fechamento).format('YYYY'), parseInt(moment($scope.dados.fechamento).format('MM')) - 1, moment($scope.dados.fechamento).format('DD'));
+                $scope.dados.status_selected_1 = ($scope.dados.status == 1 ? 'selected=selected' : '');
+                $scope.dados.status_selected_2 = ($scope.dados.status == 2 ? 'selected=selected' : '');
+                $scope.dados.status_selected_3 = ($scope.dados.status == 3 ? 'selected=selected' : '');
             }
             $scope.dados.cliente_id = $stateParams.id;
             $scope.dados.servico_id = $stateParams.tipo;

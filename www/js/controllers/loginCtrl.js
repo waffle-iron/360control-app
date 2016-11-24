@@ -1,17 +1,19 @@
-angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, NavegacaoModuloFactory, UsuariosApiFactory, LoadModuloFactory, ValidacaoModuloFactory, StorageModuloFactory, PdvTable, ServicosTable, UsuariosTable, ValidacaoTable, ServicosRespostasTable, TiersItensTable) {
+angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, NavegacaoModuloFactory, UsuariosApiFactory, LoadModuloFactory, ValidacaoModuloFactory, TiersItensRespostasTable, StorageModuloFactory, PdvTable, ServicosTable, UsuariosTable, ValidacaoTable, ServicosRespostasTable, TiersItensTable) {
 
     PdvTable.init(function (r) {
         UsuariosTable.init(function (r) {
             ValidacaoTable.init(function (r) {
                 TiersItensTable.init(function (r) {
                     ServicosRespostasTable.init(function (r) {
-                        ServicosTable.init(function (r) {
-                            if (ValidacaoModuloFactory.isNotNull(StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user))) {
-                                LoadModuloFactory.show();
-                                $rootScope.setAtualizarUser(StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user));
-                                LoadModuloFactory.hide();
-                                NavegacaoModuloFactory.go(NavegacaoModuloFactory.enum.home);
-                            }
+                        TiersItensRespostasTable.init(function (r) {
+                            ServicosTable.init(function (r) {
+                                if (ValidacaoModuloFactory.isNotNull(StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user))) {
+                                    LoadModuloFactory.show();
+                                    $rootScope.setAtualizarUser(StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user));
+                                    LoadModuloFactory.hide();
+                                    NavegacaoModuloFactory.go(NavegacaoModuloFactory.enum.home);
+                                }
+                            });
                         });
                     });
                 });
