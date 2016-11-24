@@ -1,0 +1,34 @@
+<ion-view title="PDV's" view-cache="false">
+    <ion-nav-bar class="bar-royal">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        </ion-nav-buttons>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header">
+        <div class="spacer" style="height: 25px;"></div>
+        <div>
+            De sincronización de PDV, esto puede ser un poco lento.
+        </div>
+        <div class="spacer" style="height: 25px;"></div>
+        <div ng-repeat="item in registro" style="text-align:center;" class="show-list-numbers-and-dots">
+            <div style="color:#000000;font-size:19px;">
+                <strong>Total: {{item.nome}}</strong>
+            </div>
+            <div class="row">
+                <div class="col" style="color:#000000;font-size:12px;">
+                    <strong>Total: {{item.total}}</strong>
+                </div>
+                <div class="col" style="color:#000000;font-size:12px;">
+                    <strong>Procesada: {{item.processado}}</strong>
+                </div>
+            </div>
+            <div style="color:#000000;">
+                <progress value="{{item.porcentagem}}" max="100" style="background: green;"></progress>
+            </div>
+        </div>
+        <div class="spacer" style="height: 25px;"></div>
+        <a ui-sref="men.listaDePDVs" class="button button-positive button-block">Checklist</a>
+    </ion-content>
+</ion-view>

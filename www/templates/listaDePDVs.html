@@ -4,6 +4,8 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
         </ion-nav-buttons>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
     </ion-nav-bar>
 
     <ion-header-bar class="bar-light bar-subheader">
@@ -19,7 +21,7 @@
                 <p>{{item.endereco}}</p>
                 <i class="icon ion-ios-arrow-forward icon-accessory"></i>
             </ion-item>
-            
+
         </ion-list>
         <ion-infinite-scroll
             on-infinite="loadMore()"

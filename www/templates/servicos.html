@@ -4,28 +4,31 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
         </ion-nav-buttons>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
     </ion-nav-bar>
 
     <ion-content padding="true" class="has-header">
         <widget-clientes></widget-clientes>
         <h3 style="color:#000000; text-align:center;">{{serve.nome}}</h3>
         <ion-list ng-show="serve.contem_fotos">
-            <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_antes')">
+            <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_antes', 'url_antes')">
                 <img ng-src="{{dados.url_antes}}">
                 <h2>Antes</h2>
                 <p>Registro Fotográfico</p>
                 <i class="icon ion-ios-camera"></i>
             </ion-item>
-            <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_depois')">
+            <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_depois', 'url_depois')">
                 <img ng-src="{{dados.url_depois}}">
                 <h2>Después</h2>
                 <p>Registro Fotográfico</p>
                 <i class="icon ion-ios-camera"></i>
             </ion-item>
         </ion-list>
-        <div class="spacer" style="width: 300px; height: 21px;"></div>
-        <div class="branco">
-            <form class="list">
+        <div class="spacer" style="height: 21px;"></div>
+        <form class="list">
+            <div class="branco">
+
                 <label class="item item-input item-stacked-label background: #ffc">
                     <span class="input-label">Observación</span>
                     <input type="text" ng-model="dados.observacao" placeholder="Campo de texto">
@@ -34,13 +37,11 @@
                     <span class="input-label">Pendiente interna</span>
                     <input type="text" ng-model="dados.pendencia" placeholder="Campo de texto">
                 </label>
-            </form>
-        </div>
-        <form class="list">
-            <div class="spacer" style="width: 300px; height: 21px;"></div>
+            </div>
+            <div class="spacer" style="height: 21px;"></div>
             <label class="item item-input">
                 <span class="input-label">Fecha</span>
-                <input type="date" ng-model="dados.fechamento" placeholder="">
+                <input type="date" ng-model="dados.fechamento" placeholder="Informe uma data">
             </label>
             <label class="item item-select">
                 <span class="input-label">Status</span>
@@ -50,9 +51,9 @@
                     <option value="3">Disminuido</option>
                 </select>
             </label>
-            <div class="spacer" style="width: 300px; height: 21px;"></div>
+            <div class="spacer" style="height: 21px;"></div>
             <a ng-click="salvar()" class="button button-balanced  button-block">Guardar</a>
-            <div class="spacer" style="width: 300px; height: 21px;"></div>
+            <div class="spacer" style="height: 21px;"></div>
         </form>
     </ion-content>
 </ion-view>

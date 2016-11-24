@@ -3,6 +3,8 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
         </ion-nav-buttons>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content padding="true" class="has-header">
         <form class="list">
@@ -11,35 +13,35 @@
                     <span class="input-label">Nombre</span>
                     <input ng-model="pdv.nome" type="text" placeholder="">
                 </label>
-                <div class="spacer" style="width: 300px; height: 4px;"></div>
+                <div class="spacer" style="height: 4px;"></div>
             </div>
             <div>
                 <label class="item item-input" id="editarPDV-input36">
                     <span class="input-label">Dirección</span>
                     <input ng-model="pdv.endereco" type="text" placeholder="">
                 </label>
-                <div class="spacer" style="width: 300px; height: 4px;"></div>
+                <div class="spacer" style="height: 4px;"></div>
             </div>
             <div>
                 <label class="item item-input" id="editarPDV-input37">
                     <span class="input-label">Ciudad</span>
                     <input ng-model="pdv.cidade" type="text" placeholder="">
                 </label>
-                <div class="spacer" style="width: 300px; height: 4px;"></div>
+                <div class="spacer" style="height: 4px;"></div>
             </div>
             <div>
                 <label class="item item-input" id="editarPDV-input38">
                     <span class="input-label">Teléfono</span>
                     <input ng-model="pdv.telefone" type="text" placeholder="">
                 </label>
-                <div class="spacer" style="width: 300px; height: 4px;"></div>
+                <div class="spacer" style="height: 4px;"></div>
                 <div style="text-align:center;" class="show-list-numbers-and-dots">
                     <p style="color:#000000;">Otros campos como la hoja de cálculo</p>
                 </div>
             </div>
         </form>
-        
-        <div class="spacer" style="width: 300px; height: 4px;"></div>
+
+        <div class="spacer" style="height: 4px;"></div>
         <a ng-click="salvar()" class="button button-balanced  button-block">Guardar</a>
     </ion-content>
 </ion-view>

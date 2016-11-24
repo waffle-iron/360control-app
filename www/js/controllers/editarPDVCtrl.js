@@ -1,4 +1,4 @@
-angular.module('starter').controller('editarPDVCtrl', function ($scope, $stateParams, PdvTable) {
+angular.module('starter').controller('editarPDVCtrl', function ($rootScope, $scope, $stateParams, PdvTable) {
 
     $scope.pdv = {};
 

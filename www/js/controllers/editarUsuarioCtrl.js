@@ -1,4 +1,4 @@
-angular.module('starter').controller('editarUsuarioCtrl', function ($scope, $stateParams) {
+angular.module('starter').controller('editarUsuarioCtrl', function ($rootScope, $scope, $stateParams) {
 
 
 });

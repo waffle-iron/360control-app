@@ -37,8 +37,8 @@ angular.module('starter')
                                 listener("data:image/png;base64," + imageData);
                             }
                         } else {
-                            //service.moveToImage(imageData, listener);
-                            listener(imageData);
+                            service.moveToImage(imageData, listener);
+                            //listener(imageData);
                         }
                     }, function (err) {
                         listener(null);
@@ -100,15 +100,31 @@ angular.module('starter')
             };
 
             service.moveToImage = function (imagePath, listener) {
-                var currentName = imagePath.replace(/^.*[\\\/]/, '');
-                var d = new Date(),
-                        n = d.getTime(),
-                        newFileName = n + ".jpg";
-                $cordovaFile.moveFile(cordova.file.externalCacheDirectory, currentName, cordova.file.dataDirectory, newFileName).then(function (success) {
+                debug(imagePath);
+                debug(cordova.file);
+                //Grab the file name of the photo in the temporary directory
+                var currentName = imagePath.split('/');
+                debug(currentName);
+                var f = currentName[currentName.length - 1];
+                currentName.pop();
+                var d = currentName.join('/');
+                debug(f);
+                debug(d);
+                //Create a new name for the photo
+                /*var d = new Date(),
+                 n = d.getTime(),
+                 newFileName = n + ".jpg";*/
+
+                //Move the file to permanent storage
+                $cordovaFile.moveFile(d, f, cordova.file.dataDirectory).then(function (success) {
+                    debug(success);
+                    //success.nativeURL will contain the path to the photo in permanent storage, do whatever you wish with it, e.g:
                     listener(success.nativeURL);
+
                 }, function (error) {
+                    //an error occured
                 });
             };
-            
+
             return service;
         });

@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('starter')
-            .factory('ServicosRespostasTable', ['TableModuloFactory', 'ExtraModuloFactory',
-                function (TableModuloFactory, ExtraModuloFactory) {
+            .factory('ServicosRespostasTable', ['TableModuloFactory', 'ExtraModuloFactory', 'FileModuloFactory',
+                function (TableModuloFactory, ExtraModuloFactory, FileModuloFactory) {
 
                     var services = {};
 
@@ -19,7 +19,8 @@
                             fechamento: 'VARCHAR(50)',
                             foto_antes: 'TEXT',
                             foto_depois: 'TEXT',
-                            status: 'INTEGER(1)'
+                            status: 'INTEGER(1)',
+                            sincronizado: 'INTEGER(1)'
                         };
                     };
 
@@ -71,9 +72,31 @@
                     services.first = function (o, r) {
                         services.setTable();
                         TableModuloFactory.first(o, function (resp) {
-                            resp = ExtraModuloFactory.img(resp, 'foto_antes','url_antes');
-                            resp = ExtraModuloFactory.img(resp, 'foto_depois','url_depois');
-                            r(resp);
+                            if (resp !== null) {
+                                if (resp.sincronizado > 0) {
+                                    resp = ExtraModuloFactory.img(resp, 'foto_antes', 'url_antes');
+                                    resp = ExtraModuloFactory.img(resp, 'foto_depois', 'url_depois');
+                                    r(resp);
+                                } else {
+                                    if (resp.foto_antes != '') {
+                                        FileModuloFactory.asUrl(resp.foto_antes, function (ret) {
+                                            resp['url_antes'] = ret;
+                                            if (resp.foto_depois != '') {
+                                                FileModuloFactory.asUrl(resp.foto_depois, function (ret) {
+                                                    resp['url_depois'] = ret;
+                                                    r(resp);
+                                                });
+                                            } else {
+                                                r(resp);
+                                            }
+                                        });
+                                    } else {
+                                        r(resp);
+                                    }
+                                }
+                            } else {
+                                r(resp);
+                            }
                         });
                     };
 

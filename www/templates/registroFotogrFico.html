@@ -1,106 +1,43 @@
-<ion-view title="Registro Fotográfico" id="page12" view-cache="false">
+<ion-view title="Registro Fotográfico" view-cache="false">
     <ion-nav-bar class="bar-royal">
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
         </ion-nav-buttons>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
     </ion-nav-bar>
-  <ion-content padding="true" class="has-header">
-    <div class="list card" id="registroFotogrFico-card27">
-      <ion-item class="item-avatar" id="registroFotogrFico-list-item48">
-        <img src="https://s3.amazonaws.com/ionic-io-static/PYnhNQgeTGevLdTflViz_p1.jpg">
-        <h2>nombre del PDV</h2>
-        <p>Información de la dirección</p>
-      </ion-item>
-    </div>
-    <h3 id="registroFotogrFico-heading6" style="color:#000000;text-align:center;">Registro Fotográfico</h3>
-    <form id="registroFotogrFico-form10" class="list">
-      <div class="spacer" style="width: 300px; height: 21px;"></div>
-      <ion-item class="item-avatar item-icon-right" id="registroFotogrFico-list-item50" ui-sref="men.foto">
-        <img>
-        <h2>Sillas</h2>
-        <p>Cantidad estándar: 20</p>
-        <i class="icon ion-ios-camera"></i>
-      </ion-item>
-      <label class="item item-input" id="registroFotogrFico-input19">
-        <span class="input-label">Instalado</span>
-        <input type="number" placeholder="Cantidad">
-      </label>
-    </form>
-    <form id="registroFotogrFico-form12" class="list">
-      <ion-item class="item-avatar item-icon-right" id="registroFotogrFico-list-item51" ui-sref="men.foto">
-        <img>
-        <h2>Tablas</h2>
-        <p>Cantidad estándar: 5</p>
-        <i class="icon ion-ios-camera"></i>
-      </ion-item>
-      <label class="item item-input" id="registroFotogrFico-input21">
-        <span class="input-label">Instalado</span>
-        <input type="number" placeholder="Cantidad">
-      </label>
-    </form>
-    <form id="registroFotogrFico-form13" class="list">
-      <ion-item class="item-avatar item-icon-right" id="registroFotogrFico-list-item52" ui-sref="men.foto">
-        <img>
-        <h2>Mesas de Dominó</h2>
-        <p>Cantidad estándar: 2</p>
-        <i class="icon ion-ios-camera"></i>
-      </ion-item>
-      <label class="item item-input" id="registroFotogrFico-input22">
-        <span class="input-label">Instalado</span>
-        <input type="number" placeholder="Cantidad">
-      </label>
-    </form>
-    <form id="registroFotogrFico-form14" class="list">
-      <ion-item class="item-avatar item-icon-right" id="registroFotogrFico-list-item53" ui-sref="men.foto">
-        <img>
-        <h2>Juegos de Dominó</h2>
-        <p>Cantidad estándar: 2</p>
-        <i class="icon ion-ios-camera"></i>
-      </ion-item>
-      <label class="item item-input" id="registroFotogrFico-input23">
-        <span class="input-label">Instalado</span>
-        <input type="number" placeholder="Cantidad">
-      </label>
-    </form>
-    <form id="registroFotogrFico-form15" class="list">
-      <ion-item class="item-avatar item-icon-right" id="registroFotogrFico-list-item54" ui-sref="men.foto">
-        <img>
-        <h2>Fascias</h2>
-        <p>Cantidad estándar: 1</p>
-        <i class="icon ion-ios-camera"></i>
-      </ion-item>
-      <label class="item item-input" id="registroFotogrFico-input24">
-        <span class="input-label">Instalado</span>
-        <input type="number" placeholder="Cantidad">
-      </label>
-    </form>
-    <form id="registroFotogrFico-form16" class="list">
-      <ion-item class="item-avatar item-icon-right" id="registroFotogrFico-list-item55" ui-sref="men.foto">
-        <img>
-        <h2>Pinturas</h2>
-        <p>Cantidad estándar: 1</p>
-        <i class="icon ion-ios-camera"></i>
-      </ion-item>
-      <label class="item item-input" id="registroFotogrFico-input25">
-        <span class="input-label">Instalado</span>
-        <input type="number" placeholder="Cantidad">
-      </label>
-    </form>
-    <form id="registroFotogrFico-form17" class="list">
-      <ion-item class="item-avatar item-icon-right" id="registroFotogrFico-list-item56" ui-sref="men.foto">
-        <img>
-        <h2>Mostradores</h2>
-        <p>Cantidad estándar: 1</p>
-        <i class="icon ion-ios-camera"></i>
-      </ion-item>
-      <label class="item item-input" id="registroFotogrFico-input26">
-        <span class="input-label">Instalado</span>
-        <input type="number" placeholder="Cantidad">
-      </label>
-    </form>
-    <form id="registroFotogrFico-form8" class="list">
-      <a ui-sref="men.ambev" id="registroFotogrFico-button18" class="button button-dark  button-block">Retorno</a>
-      <div class="spacer" style="width: 300px; height: 21px;"></div>
-    </form>
-  </ion-content>
+    <ion-content padding="true" class="has-header">
+        <div class="list card">
+            <ion-item class="item-avatar">
+                <img src="https://s3.amazonaws.com/ionic-io-static/PYnhNQgeTGevLdTflViz_p1.jpg">
+                <h2>nombre del PDV</h2>
+                <p>Información de la dirección</p>
+            </ion-item>
+        </div>
+        <h3 style="color:#000000;text-align:center;">Registro Fotográfico</h3>
+
+        <form class="list">
+
+            <div ng-repeat="l in dados">
+                <div class="spacer" style="height: 21px;"></div>
+                <ion-item class="item-avatar item-icon-right">
+                    <img ng-src="{{l.url}}">
+                    <h2>{{l.item}}</h2>
+                    <p>Cantidad estándar: {{l.quantidade}}</p>
+                    <i class="icon ion-ios-camera"></i>
+                </ion-item>
+                <label class="item item-input">
+                    <span class="input-label">Instalado</span>
+                    <input type="number" placeholder="Cantidad">
+                </label>
+            </div>
+        </form>
+
+
+
+        <form id="registroFotogrFico-form8" class="list">
+            <a ui-sref="men.ambev" id="registroFotogrFico-button18" class="button button-dark  button-block">Retorno</a>
+            <div class="spacer" style="height: 21px;"></div>
+        </form>
+    </ion-content>
 </ion-view>

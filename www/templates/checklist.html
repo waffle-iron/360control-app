@@ -1,20 +1,22 @@
 <ion-view title="Checklist" view-cache="false">
-        <ion-nav-bar class="bar-royal">
-            <ion-nav-buttons side="left">
-                <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-            </ion-nav-buttons>
-            <ion-nav-buttons side="right">
-                <a class="button button-icon button-clear ion-checkmark-circled" menu-toggle="right" ng-href="#/men/validaciN/{{id_pdv}}"></a>
-            </ion-nav-buttons>
-        </ion-nav-bar>
+    <ion-nav-bar class="bar-royal">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+        </ion-nav-buttons>
+        <ion-nav-buttons side="right">
+            <a class="button button-icon button-clear ion-checkmark-circled" menu-toggle="right" ng-href="#/men/validaciN/{{id_pdv}}"></a>
+        </ion-nav-buttons>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+    </ion-nav-bar>
 
     <ion-content padding="true" class="has-header">
-        
+
         <widget-clientes></widget-clientes>
-        
+
         <div style="text-align:center;" class="show-list-numbers-and-dots">
             <p style="color:#000000;">Seleccione la tarea</p>
         </div>
-        <a ng-repeat="item in serve" ng-href="#/men/servicos/{{id_pdv}}/{{item.id}}" style="text-align:left;" class="button button-positive  button-block icon-left {{item.icone}}"> {{item.nome}}</a>
+        <a ng-repeat="item in serve" ng-href="#/men/servicos/{{id_pdv}}/{{item.id}}" style="text-align:left;" class="button button-positive  button-block icon-left"><i class="fa {{item.icone}}"></i> {{item.nome}}</a>
     </ion-content>
 </ion-view>

@@ -1,4 +1,4 @@
-angular.module('starter').controller('listaDePDVsCtrl', function ($scope, $stateParams, LoadModuloFactory, PdvTable, $ionicScrollDelegate, lodash) {
+angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $scope, $stateParams, LoadModuloFactory, PdvTable, $ionicScrollDelegate, lodash) {
     $scope.dados = [];
     $scope.search = '';
     var maxLimit = 0;
@@ -18,7 +18,7 @@ angular.module('starter').controller('listaDePDVsCtrl', function ($scope, $state
                 $scope.dados = [];
                 dados = [];
             } else {
-                var options = {limit: maxLimit + ',50'};
+                options['limit'] = maxLimit + ',50';
             }
 
             PdvTable.all(options, function (r) {

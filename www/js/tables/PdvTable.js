@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('starter')
-            .factory('PdvTable', ['TableModuloFactory', 'ExtraModuloFactory',
-                function (TableModuloFactory, ExtraModuloFactory) {
+            .factory('PdvTable', ['TableModuloFactory',
+                function (TableModuloFactory) {
 
                     var services = {};
 
@@ -11,22 +11,13 @@
                         TableModuloFactory.table = 'pdv';
                         TableModuloFactory.campos = {
                             id: 'INTEGER PRIMARY KEY AUTOINCREMENT',
+                            codigo: 'VARCHAR(500)',
                             nome: 'VARCHAR(500)',
                             endereco: 'VARCHAR(500)',
                             cidade: 'VARCHAR(500)',
                             telefone: 'VARCHAR(50)',
-                            foto: 'TEXT'
+                            tier_id: 'VARCHAR(2)'
                         };
-                    };
-
-                    services.populaBase = function () {
-                        services.setTable();
-                        TableModuloFactory.init(function (r) {
-                            for (var i = 1; i <= 9000; i++) {
-                                services.setTable();
-                                TableModuloFactory.replace({id: i, nome: 'teste ' + i, endereco: 'Rua: Joaquim Francisco Galeano, 109', cidade: 'Ribeirão Preto', telefone: '(16) 99266-0128', foto: 'img/logo.jpg'}, function (r) {});
-                            }
-                        });
                     };
 
                     services.drop = function (r) {
@@ -72,7 +63,9 @@
                     services.get = function (v, r) {
                         services.setTable();
                         TableModuloFactory.get(v, function (resp) {
-                            resp = ExtraModuloFactory.img(resp, 'foto');
+                            if (resp !== null) {
+                                resp.url = '/img/p' + resp.tier_id + '.png';
+                            }
                             r(resp);
                         });
                     };
@@ -80,7 +73,9 @@
                     services.first = function (o, r) {
                         services.setTable();
                         TableModuloFactory.first(o, function (resp) {
-                            resp = ExtraModuloFactory.img(resp, 'foto');
+                            if (resp !== null) {
+                                resp.url = '/img/p' + resp.tier_id + '.png';
+                            }
                             r(resp);
                         });
                     };
@@ -88,9 +83,11 @@
                     services.all = function (o, r) {
                         services.setTable();
                         TableModuloFactory.all(o, function (resp) {
-                            angular.forEach(resp, function(v, k){
-                                resp[k] = ExtraModuloFactory.img(resp[k], 'foto');
-                            })
+                            if (resp !== null) {
+                                angular.forEach(resp, function (v, k) {
+                                    resp[k]['url'] = '/img/p' + v.tier_id + '.png';
+                                });
+                            }
                             r(resp);
                         });
                     };

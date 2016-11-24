@@ -3,11 +3,13 @@
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
         </ion-nav-buttons>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
     </ion-nav-bar>
     <ion-content padding="true" class="has-header">
-        
+
         <widget-clientes></widget-clientes>
-        
+
         <form class="list">
             <div class="branco">
                 <label class="item item-input item-stacked-label">
@@ -15,18 +17,18 @@
                     <input type="text" placeholder="Campo de texto" ng-model="dados.observacao">
                 </label>
             </div>
-            <div class="spacer" style="width: 300px; height: 21px;"></div>
+            <div class="spacer" style="height: 21px;"></div>
             <label class="item item-input">
                 <span class="input-label">Fecha</span>
                 <input type="date" placeholder="" ng-model="dados.fechamento">
             </label>
             <ion-toggle toggle-class="toggle-balanced" ng-checked="dados.disponivel" ng-model="dados.disponivel">Disponible para positivación</ion-toggle>
-           
-            <div class="spacer" style="width: 300px; height: 21px;"></div>
-            
+
+            <div class="spacer" style="height: 21px;"></div>
+
             <a ng-click="salvar()" class="button button-balanced  button-block">Guardar</a>
-            
-            <div class="spacer" style="width: 300px; height: 21px;"></div>
+
+            <div class="spacer" style="height: 21px;"></div>
         </form>
     </ion-content>
 </ion-view>

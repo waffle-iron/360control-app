@@ -1,4 +1,4 @@
-angular.module('starter').controller('validaciNCtrl', function ($scope, $stateParams, ValidacaoTable, LoadModuloFactory, moment, PdvTable) {
+angular.module('starter').controller('validaciNCtrl', function ($rootScope, $scope, $stateParams, ValidacaoTable, LoadModuloFactory, moment, PdvTable) {
     LoadModuloFactory.show();
     $scope.id_pdv = $stateParams.id;
     $scope.dados = {

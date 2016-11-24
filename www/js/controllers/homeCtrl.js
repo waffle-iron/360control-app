@@ -1,4 +1,4 @@
-angular.module('starter').controller('homeCtrl', function ($scope, $stateParams) {
+angular.module('starter').controller('homeCtrl', function ($rootScope, $scope, $stateParams) {
 
 
 });

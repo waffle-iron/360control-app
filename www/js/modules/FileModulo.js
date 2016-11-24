@@ -1,5 +1,5 @@
 angular.module('starter')
-        .factory('FileModuloFactory', function (Base64ModuloFactory, Config, StorageModuloFactory, $cordovaFileTransfer, $cordovaFile) {
+        .factory('FileModuloFactory', function (Config, StorageModuloFactory, $cordovaFileTransfer, $cordovaFile) {
             var service = {};
             service.upload = function (url, targetPath, options, listener) {
                 var user = StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user);

@@ -22,8 +22,12 @@ angular.module('starter')
                         if (ValidacaoModuloFactory.isNotNull(dados)) {
                             if (ValidacaoModuloFactory.isNotNull(dados[campo])) {
                                 dados[alias] = dados[campo];
-                                if (services.checkConnection) {
-                                    dados[alias] = 'img/img_wifi.jpg';
+                                if (dados[campo] != '') {
+                                    if (!services.checkConnection) {
+                                        dados[alias] = 'img/img_wifi.jpg';
+                                    }
+                                } else {
+                                    dados[alias] = 'img/imagem_sem.jpg';
                                 }
                             } else {
                                 dados[alias] = 'img/imagem_sem.jpg';
@@ -147,6 +151,10 @@ angular.module('starter')
                         } else {
                             return false;
                         }
+                    };
+
+                    services.calulcarPorcentagem = function (total, processado) {
+                        return Math.round((((total - processado) / total) * 100) - 100) * -1;
                     };
 
                     return services;

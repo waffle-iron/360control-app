@@ -1,4 +1,4 @@
-angular.module('starter').controller('menCtrl', function ($scope, $stateParams) {
+angular.module('starter').controller('menCtrl', function ($rootScope, $scope, $stateParams) {
 
 
 });

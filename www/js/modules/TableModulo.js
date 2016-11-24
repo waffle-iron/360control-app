@@ -49,9 +49,7 @@
 
                         var sql = 'CREATE TABLE IF NOT EXISTS ' + services.table + ' (' + campos.join(', ') + ');';
 
-                        services.query(sql, function (e) {
-                            retorno(e);
-                        });
+                        services.query(sql, retorno);
 
                     };
 

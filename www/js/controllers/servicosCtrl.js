@@ -1,4 +1,4 @@
-angular.module('starter').controller('servicosCtrl', function (moment, $scope, $stateParams, ServicosTable, ServicosRespostasTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
+angular.module('starter').controller('servicosCtrl', function ($rootScope, ExtraModuloFactory, FileModuloFactory, moment, $scope, $stateParams, ServicosTable, ServicosRespostasTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
 
 
     LoadModuloFactory.show();
@@ -7,16 +7,22 @@ angular.module('starter').controller('servicosCtrl', function (moment, $scope, $
     $scope.pdv = [];
     $scope.dados = {
         id: '',
-        usuario_id: 1,
+        usuario_id: $rootScope.user.id,
         cliente_id: $stateParams.id,
         servico_id: $stateParams.tipo,
         observacao: '',
         pendencia: '',
-        fechamento: '',
+        fechamento: new Date(moment(new Date()).format('YYYY'), parseInt(moment(new Date()).format('MM')) - 1, moment(new Date()).format('DD')),
         foto_antes: '',
+        url_antes: '',
         foto_depois: '',
-        status: 1
+        url_depois: '',
+        status: 0,
+        sincronizado: 0
     };
+
+    $scope.dados = ExtraModuloFactory.img($scope.dados, 'foto_antes', 'url_antes');
+    $scope.dados = ExtraModuloFactory.img($scope.dados, 'foto_depois', 'url_depois');
 
     PdvTable.get($stateParams.id, function (r) {
         if (r !== null) {
@@ -31,9 +37,8 @@ angular.module('starter').controller('servicosCtrl', function (moment, $scope, $
 
         ServicosRespostasTable.first({where: 'cliente_id = ' + $stateParams.id + ' and servico_id = ' + $stateParams.tipo}, function (r) {
             if (r !== null) {
-                $scope.dados = r;
+                $scope.dados = angular.merge({}, $scope.dados, r);
                 $scope.dados.fechamento = new Date(moment($scope.dados.fechamento).format('YYYY'), parseInt(moment($scope.dados.fechamento).format('MM')) - 1, moment($scope.dados.fechamento).format('DD'));
-
             }
             $scope.dados.cliente_id = $stateParams.id;
             $scope.dados.servico_id = $stateParams.tipo;
@@ -42,13 +47,19 @@ angular.module('starter').controller('servicosCtrl', function (moment, $scope, $
 
     });
 
-    $scope.tirarFoto = function (campo) {
-        CameraModuloFactory.selecionarFotoFile(function (r) {
-            $scope.dados[campo] = r;
+    $scope.tirarFoto = function (campo1, campo2) {
+        LoadModuloFactory.show();
+        CameraModuloFactory.capturarFotoFile(function (r) {
+            FileModuloFactory.asUrl(r, function (ret) {
+                $scope.dados[campo1] = r;
+                $scope.dados[campo2] = ret;
+                LoadModuloFactory.hide();
+            });
         });
     };
 
     $scope.salvar = function () {
+        LoadModuloFactory.show();
         ServicosRespostasTable.save({
             id: $scope.dados.id,
             usuario_id: $scope.dados.usuario_id,
@@ -59,11 +70,13 @@ angular.module('starter').controller('servicosCtrl', function (moment, $scope, $
             fechamento: moment($scope.dados.fechamento).format('YYYY-MM-DD'),
             foto_antes: $scope.dados.foto_antes,
             foto_depois: $scope.dados.foto_depois,
-            status: $scope.dados.status
+            status: $scope.dados.status,
+            sincronizado: 0
         }, function (r) {
             if (r !== null) {
-                $scope.dados = r;
+                $scope.dados.id = r.id;
             }
+            LoadModuloFactory.hide();
         });
     };
 

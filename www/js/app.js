@@ -1,3 +1,4 @@
+var _debug = true;
 var debug = function (str) {
     console.log(JSON.stringify(str));
 }
@@ -9,28 +10,50 @@ var debug = function (str) {
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angularMoment', 'ngLodash'])
         .constant('Config', {
-            //url: 'http://192.168.1.120/homeplay',
-            url: 'http://homeplay.agenciavoxel.com.br',
-            api: '/',
-            timeout: 5000,
-            database: 'homeplay',
-            appVersion: '00.00.01'
+            url: 'http://192.168.1.35/360control/',
+            api: 'api/',
+            versaoApp: '01.00.01',
+            timeout: 35000,
+            database: 'control',
+            debug: _debug,
+            avisoSemConexao: 'Essa página necessita de conexão com a internet para ser exibida.',
+            avisoGpsInattivo: 'Verifique se o seu GPS esta ativo e com conexão com a internet para trazer os clientes mais próximo à você.'
         })
 
-        .run(function ($ionicPlatform) {
+        .run(function (Config, $cordovaDevice, $rootScope, StorageModuloFactory, $ionicPlatform) {
             $ionicPlatform.ready(function () {
-                // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-                // for form inputs)
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                     cordova.plugins.Keyboard.disableScroll(true);
-
                 }
                 if (window.StatusBar) {
-                    // org.apache.cordova.statusbar required
                     StatusBar.styleDefault();
                 }
             });
+
+            $rootScope.user = {};
+
+            $rootScope.setAtualizarUser = function (result) {
+                StorageModuloFactory.local.setObject(StorageModuloFactory.enum.user, result);
+                var adicionais = function () {
+                    document.addEventListener("deviceready", function () {
+                        var user = StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user);
+                        user = angular.merge(user, {
+                            cordova: $cordovaDevice.getCordova(),
+                            model: $cordovaDevice.getModel(),
+                            platform: $cordovaDevice.getPlatform(),
+                            uuid: $cordovaDevice.getUUID(),
+                            version: $cordovaDevice.getVersion(),
+                            versao_app: Config.versaoApp
+                        });
+                        StorageModuloFactory.local.setObject(StorageModuloFactory.enum.user, user);
+                        $rootScope.user = StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user);
+                    }, false);
+                }
+                adicionais();
+                $rootScope.user = StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user);
+            };
+
         })
 
         .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider) {
@@ -43,14 +66,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
             $ionicConfigProvider.views.maxCache(0);
             $ionicConfigProvider.views.transition('none');
             $stateProvider
-
                     .state('men', {
                         url: '/men',
                         abstract: true,
                         templateUrl: 'templates/men.html',
                         controller: 'menCtrl'
                     })
-
                     .state('men.home', {
                         url: '/home',
                         views: {
@@ -60,7 +81,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
+                    .state('men.pdvs', {
+                        url: '/pdvs',
+                        views: {
+                            'menuContent': {
+                                templateUrl: 'templates/pdvs.html',
+                                controller: 'pdvsCtrl'
+                            }
+                        }
+                    })
                     .state('men.login', {
                         url: '/login',
                         views: {
@@ -70,7 +99,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
+                    .state('men.logout', {
+                        url: '/logout',
+                        views: {
+                            'menuContent': {
+                                templateUrl: 'templates/login.html',
+                                controller: 'logoutCtrl'
+                            }
+                        }
+                    })
                     .state('men.listaDePDVs', {
                         url: '/listaDePDVs',
                         views: {
@@ -80,7 +117,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
                     .state('men.checklist', {
                         url: '/checklist/:id',
                         views: {
@@ -90,7 +126,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
                     .state('men.editarPDV', {
                         url: '/editarPDV/:id',
                         views: {
@@ -100,7 +135,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
                     .state('men.editarUsuario', {
                         url: '/editarUsuario',
                         views: {
@@ -110,8 +144,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
-
                     .state('men.servicos', {
                         url: '/servicos/:id/:tipo',
                         views: {
@@ -121,8 +153,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
-
                     .state('men.validaciN', {
                         url: '/validaciN/:id',
                         views: {
@@ -132,7 +162,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
                     .state('men.registroFotogrFico', {
                         url: '/registroFotogrFico',
                         views: {
@@ -142,8 +171,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             }
                         }
                     })
-
-;
-            // if none of the above states are matched, use this as the fallback
+                    ;
             $urlRouterProvider.otherwise('/men/login');
         });

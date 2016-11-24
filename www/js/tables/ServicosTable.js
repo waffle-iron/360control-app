@@ -18,19 +18,6 @@
                         };
                     };
 
-                    services.populaBase = function () {
-                        services.setTable();
-                        TableModuloFactory.drop(function (r) {
-                            services.setTable();
-                            TableModuloFactory.init(function (r) {
-                                TableModuloFactory.save({nome: 'Pintura', icone: 'ion-paintbrush', status: 1, contem_fotos: 1}, function (r) {});
-                                TableModuloFactory.save({nome: 'Fachada', icone: 'ion-home', status: 1, contem_fotos: 1}, function (r) {});
-                                TableModuloFactory.save({nome: 'Contador', icone: 'ion-cube', status: 1, contem_fotos: 1}, function (r) {});
-                                TableModuloFactory.save({nome: 'Positivación Ambev', icone: 'ion-wand', status: 1, contem_fotos: 0}, function (r) {});
-                            });
-                        });
-                    };
-
                     services.drop = function (r) {
                         services.setTable();
                         TableModuloFactory.drop(r);
