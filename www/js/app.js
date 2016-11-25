@@ -20,7 +20,7 @@ var debug = function (val) {
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angularMoment', 'ngLodash'])
         .constant('Config', {
-            url: 'http://192.168.1.35/360control/',
+            url: 'http://45.55.132.186/',
             api: 'api/',
             versaoApp: '01.00.01',
             timeout: 35000,
