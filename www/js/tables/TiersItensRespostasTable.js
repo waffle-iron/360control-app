@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('starter')
-            .factory('TiersItensRespostasTable', ['TableModuloFactory', 'ExtraModuloFactory', 'FileModuloFactory',
-                function (TableModuloFactory, ExtraModuloFactory, FileModuloFactory) {
+            .factory('TiersItensRespostasTable', ['TableModuloFactory', 'ExtraModuloFactory', 'FileModuloFactory', 'ValidacaoModuloFactory',
+                function (TableModuloFactory, ExtraModuloFactory, FileModuloFactory, ValidacaoModuloFactory) {
 
                     var services = {};
 
@@ -110,30 +110,29 @@
                     services.all = function (o, r) {
                         services.setTable();
                         TableModuloFactory.all(o, function (resp) {
+                            var retorno = [];
                             if (resp !== null) {
-                                var t = resp.length - 1;
-                                var s = 0;
+                                var t = ValidacaoModuloFactory.count(resp) - 1;
                                 angular.forEach(resp, function (v, k) {
-                                    if (resp[k].sincronizado > 0) {
-                                        resp[k] = ExtraModuloFactory.img(resp[k], 'foto', 'url');
-                                        if (t >= s) {
-                                            r(resp);
+                                    if (v.sincronizado > 0) {
+                                        retorno.push(ExtraModuloFactory.img(v, 'foto', 'url'));
+                                        if (k >= t) {
+                                            r(retorno);
                                         }
-                                        s++;
                                     } else {
-                                        if (resp[k].foto != '') {
-                                            FileModuloFactory.asUrl(resp[k].foto, function (ret) {
-                                                resp[k]['url'] = ret;
-                                                if (t >= s) {
-                                                    r(resp);
+                                        if (v.foto != '') {
+                                            FileModuloFactory.asUrl(v.foto, function (ret) {
+                                                v['url'] = ret;
+                                                retorno.push(v);
+                                                if (k >= t) {
+                                                    r(retorno);
                                                 }
-                                                s++;
                                             });
                                         } else {
-                                            if (t >= s) {
-                                                r(resp);
+                                            retorno.push(ExtraModuloFactory.img(v, 'foto', 'url'));
+                                            if (k >= t) {
+                                                r(retorno);
                                             }
-                                            s++;
                                         }
                                     }
                                 });

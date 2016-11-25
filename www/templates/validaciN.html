@@ -6,7 +6,7 @@
         <ion-nav-back-button>
         </ion-nav-back-button>
     </ion-nav-bar>
-    <ion-content padding="true" class="has-header">
+    <ion-content padding="true">
 
         <widget-clientes></widget-clientes>
 
@@ -20,9 +20,9 @@
             <div class="spacer" style="height: 21px;"></div>
             <label class="item item-input">
                 <span class="input-label">Fecha</span>
-                <input type="date" placeholder="" ng-model="dados.fechamento">
+                <input type="date" placeholder="" ng-model="dados.data">
             </label>
-            <ion-toggle toggle-class="toggle-balanced" ng-checked="dados.disponivel" ng-model="dados.disponivel">Disponible para positivación</ion-toggle>
+            <ion-toggle toggle-class="toggle-balanced" ng-checked="dados.ativacao" ng-model="dados.ativacao">Disponible para positivación</ion-toggle>
 
             <div class="spacer" style="height: 21px;"></div>
 

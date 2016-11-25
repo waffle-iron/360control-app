@@ -20,7 +20,7 @@ var debug = function (val) {
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angularMoment', 'ngLodash'])
         .constant('Config', {
-            url: 'http://192.168.1.42/360control/',
+            url: 'http://192.168.1.35/360control/',
             api: 'api/',
             versaoApp: '01.00.01',
             timeout: 35000,
@@ -30,7 +30,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
             avisoGpsInattivo: 'Verifique se o seu GPS esta ativo e com conexão com a internet para trazer os clientes mais próximo à você.'
         })
 
-        .run(function (Config, $cordovaDevice, $rootScope, StorageModuloFactory, $ionicPlatform) {
+        .run(function (NavegacaoModuloFactory, Config, $cordovaDevice, $rootScope, StorageModuloFactory, $ionicPlatform) {
             $ionicPlatform.ready(function () {
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -42,6 +42,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
             });
 
             $rootScope.user = {};
+            $rootScope.user = StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user);
+            $rootScope.versaoApp = Config.versaoApp;
 
             $rootScope.setAtualizarUser = function (result) {
                 StorageModuloFactory.local.setObject(StorageModuloFactory.enum.user, result);
@@ -62,6 +64,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                 }
                 adicionais();
                 $rootScope.user = StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user);
+            };
+            
+            $rootScope.go = function (url, params) {
+                NavegacaoModuloFactory.go(url, params);
             };
 
         })
@@ -115,6 +121,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                             'menuContent': {
                                 templateUrl: 'templates/login.html',
                                 controller: 'logoutCtrl'
+                            }
+                        }
+                    })
+                    .state('men.sincronizacao', {
+                        url: '/sincronizacao',
+                        views: {
+                            'menuContent': {
+                                templateUrl: 'templates/sincronizacao.html',
+                                controller: 'sincronizacaoCtrl'
                             }
                         }
                     })

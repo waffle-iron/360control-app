@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('starter')
-            .factory('ServicosRespostasTable', ['TableModuloFactory', 'ExtraModuloFactory', 'FileModuloFactory',
-                function (TableModuloFactory, ExtraModuloFactory, FileModuloFactory) {
+            .factory('ServicosRespostasTable', ['TableModuloFactory', 'ExtraModuloFactory', 'FileModuloFactory', 'ValidacaoModuloFactory',
+                function (TableModuloFactory, ExtraModuloFactory, FileModuloFactory, ValidacaoModuloFactory) {
 
                     var services = {};
 
@@ -102,7 +102,52 @@
 
                     services.all = function (o, r) {
                         services.setTable();
-                        TableModuloFactory.all(o, r);
+                        TableModuloFactory.all(o, function (resp) {
+                            var retorno = [];
+                            if (resp !== null) {
+                                var t = ValidacaoModuloFactory.count(resp) - 1;
+                                angular.forEach(resp, function (v, k) {
+                                    if (v.sincronizado > 0) {
+                                        v = ExtraModuloFactory.img(v, 'foto_antes', 'url_antes');
+                                        v = ExtraModuloFactory.img(v, 'foto_depois', 'url_depois');
+                                        retorno.push(v);
+                                        if (k >= t) {
+                                            r(retorno);
+                                        }
+                                    } else {
+                                        if (v.foto_antes != '') {
+                                            FileModuloFactory.asUrl(v.foto_antes, function (ret) {
+                                                v['url_antes'] = ret;
+                                                if (v.foto_depois != '') {
+                                                    FileModuloFactory.asUrl(v.foto_depois, function (ret) {
+                                                        v['url_depois'] = ret;
+                                                        retorno.push(v);
+                                                        if (k >= t) {
+                                                            r(retorno);
+                                                        }
+                                                    });
+                                                } else {
+                                                    v = ExtraModuloFactory.img(v, 'foto_depois', 'url_depois');
+                                                    retorno.push(v);
+                                                    if (k >= t) {
+                                                        r(retorno);
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            v = ExtraModuloFactory.img(v, 'foto_antes', 'url_antes');
+                                            v = ExtraModuloFactory.img(v, 'foto_depois', 'url_depois');
+                                            retorno.push(v);
+                                            if (k >= t) {
+                                                r(retorno);
+                                            }
+                                        }
+                                    }
+                                });
+                            } else {
+                                r(resp);
+                            }
+                        });
                     };
 
                     services.deleteAll = function (o, r) {

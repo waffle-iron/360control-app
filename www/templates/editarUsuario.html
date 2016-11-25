@@ -1,4 +1,4 @@
-<ion-view title="Editar Usuário" id="page22" view-cache="false">
+<ion-view title="Editar Usuário" view-cache="false">
     <ion-nav-bar class="bar-royal">
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
@@ -6,47 +6,40 @@
         <ion-nav-back-button>
         </ion-nav-back-button>
     </ion-nav-bar>
-    <ion-content padding="true" class="has-header">
-        <div id="editarUsuRio-container47">
-            <form id="editarUsuRio-form51" class="list">
-                <label class="item item-input" id="editarUsuRio-input55">
+    <ion-content padding="true">
+        <form class="list">
+            <div>
+
+                <label class="item item-input">
                     <span class="input-label">Nombre</span>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="" ng-model="user.nome">
                 </label>
                 <div class="spacer" style="height: 4px;"></div>
-            </form>
-        </div>
-        <div id="editarUsuRio-container48">
-            <form id="editarUsuRio-form52" class="list">
-                <label class="item item-input" id="editarUsuRio-input56">
+
+            </div>
+            <div>
+                <label class="item item-input">
                     <span class="input-label">Login</span>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="" ng-model="user.login">
                 </label>
                 <div class="spacer" style="height: 4px;"></div>
-            </form>
-        </div>
-        <div id="editarUsuRio-container49">
-            <form id="editarUsuRio-form53" class="list">
-                <label class="item item-input" id="editarUsuRio-input57">
+            </div>
+            <div>
+                <label class="item item-input">
                     <span class="input-label">Contraseña</span>
-                    <input type="text" placeholder="">
+                    <input type="password" placeholder="" ng-model="user.senha">
                 </label>
                 <div class="spacer" style="height: 4px;"></div>
-            </form>
-        </div>
-        <div id="editarUsuRio-container50">
-            <form id="editarUsuRio-form54" class="list">
+            </div>
+            <div>
                 <div class="spacer" style="height: 4px;"></div>
                 <div id="editarUsuRio-markdown16" style="text-align:center;" class="show-list-numbers-and-dots">
                     <p style="color:#000000;">Otros campos como la hoja de cálculo</p>
                 </div>
-            </form>
-        </div>
-        <div id="editarUsuRio-container51">
-            <form id="editarUsuRio-form55" class="list">
-                <div class="spacer" style="height: 4px;"></div>
-            </form>
-        </div>
-        <a ui-sref="men.home" id="editarUsuRio-button34" class="button button-balanced  button-block">Guardar</a>
+            </div>
+        </form>
+
+        <div class="spacer" style="height: 4px;"></div>
+        <a ng-click="salvar()" class="button button-balanced  button-block">Guardar</a>
     </ion-content>
 </ion-view>

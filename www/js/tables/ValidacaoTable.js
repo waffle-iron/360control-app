@@ -14,8 +14,9 @@
                             usuario_id: 'INTEGER(11)',
                             cliente_id: 'INTEGER(11)',
                             observacao: 'TEXT',
-                            fechamento: 'VARCHAR(50)',
-                            disponivel: 'INTEGER(1)'
+                            data: 'VARCHAR(50)',
+                            ativacao: 'INTEGER(1)',
+                            sincronizado: 'INTEGER(1)'
                         };
                     };
 
@@ -41,7 +42,12 @@
 
                     services.save = function (o, r) {
                         services.setTable();
-                        TableModuloFactory.save(o, r);
+                        services.first({where: 'usuario_id = ' + o.usuario_id + ' AND cliente_id = ' + o.cliente_id}, function (res) {
+                            if (res !== null) {
+                                r.id = res.id;
+                            }
+                            TableModuloFactory.save(o, r);
+                        });
                     };
 
                     services.insert = function (o, r) {

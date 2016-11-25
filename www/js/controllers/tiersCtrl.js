@@ -1,4 +1,4 @@
-angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraModuloFactory, FileModuloFactory, moment, $scope, $stateParams, TiersItensRespostasTable, TiersItensTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
+angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraModuloFactory, FileModuloFactory, moment, ValidacaoTable, ValidacaoModuloFactory, $scope, $stateParams, TiersItensRespostasTable, TiersItensTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
 
     LoadModuloFactory.show();
     $scope.id_pdv = $stateParams.id;
@@ -24,7 +24,7 @@ angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraMod
                     d.TiersItensurl = null;
                     d.TiersItenssincronizado = 0;
 
-                    d.TiersItensfoto = ExtraModuloFactory.img(d, 'TiersItensfoto', 'TiersItensurl');
+                    d = ExtraModuloFactory.img(d, 'TiersItensfoto', 'TiersItensurl');
 
                     TiersItensRespostasTable.first({where: 'cliente_id = ' + $stateParams.id + ' and tiers_item_id = ' + v.id}, function (r) {
                         LoadModuloFactory.show();
@@ -34,7 +34,7 @@ angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraMod
                             d.TiersItenscliente_id = r.cliente_id;
                             d.TiersItenstier_id = r.tier_id;
                             d.TiersItenstiers_item_id = r.tiers_item_id;
-                            d.TiersItensresposta = r.resposta;
+                            d.TiersItensresposta = parseInt(r.resposta);
                             d.TiersItensfoto = r.foto;
                             d.TiersItensurl = r.url;
                             d.TiersItenssincronizado = r.sincronizado;
@@ -61,26 +61,44 @@ angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraMod
     };
 
     $scope.salvar = function () {
-        debug($scope.dados);
-        /*LoadModuloFactory.show();
-        TiersItensRespostasTable.save({
-            id: $scope.dados.id,
-            usuario_id: $scope.dados.usuario_id,
+        var t = ValidacaoModuloFactory.count($scope.dados) -1;
+
+        LoadModuloFactory.show();
+        angular.forEach($scope.dados, function (v, k) {
+            TiersItensRespostasTable.save({
+                id: v.TiersItensid,
+                usuario_id: v.TiersItensusuario_id,
+                cliente_id: v.TiersItenscliente_id,
+                tier_id: v.TiersItenstier_id,
+                tiers_item_id: v.TiersItenstiers_item_id,
+                resposta: v.TiersItensresposta,
+                foto: v.TiersItensfoto,
+                sincronizado: 0
+            }, function (r) {
+                if (r !== null) {
+                    $scope.dados[k].TiersItensid = r.id;
+                    debug(t);
+                    debug(k);
+                }
+                if (k >= t) {
+                    LoadModuloFactory.hide();
+                    ValidacaoModuloFactory.alert('Datos de guardado correctamente.');
+                }
+
+            });
+        });
+
+        ValidacaoTable.save({
+            observacao: 'Ativação Automatica',
+            usuario_id: $rootScope.user.id,
             cliente_id: $stateParams.id,
-            servico_id: $stateParams.tipo,
-            observacao: $scope.dados.observacao,
-            pendencia: $scope.dados.pendencia,
-            fechamento: moment($scope.dados.fechamento).format('YYYY-MM-DD'),
-            foto_antes: $scope.dados.foto_antes,
-            foto_depois: $scope.dados.foto_depois,
-            status: $scope.dados.status,
+            data: moment(new Date()).format('YYYY-MM-DD'),
+            ativacao: 1,
             sincronizado: 0
         }, function (r) {
-            if (r !== null) {
-                $scope.dados.id = r.id;
-            }
-            LoadModuloFactory.hide();
-        });*/
+
+        });
+
     };
 
 });

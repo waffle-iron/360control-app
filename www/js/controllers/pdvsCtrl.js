@@ -10,13 +10,13 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
             porcentagem: 0
         },
         servicos: {
-            nome: "Servicos",
+            nome: "Servicios",
             total: 0,
             processado: 0,
             porcentagem: 0
         },
         tiers: {
-            nome: "Itens e Tiers",
+            nome: "Los productos y Niveles",
             total: 0,
             processado: 0,
             porcentagem: 0
@@ -27,6 +27,7 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
 
     $scope.replace = function (dados) {
         angular.forEach(dados, function (v, k) {
+            v.sincronizado = 1;
             PdvTable.replace(v, function (r) {
                 $scope.registro.pdv.processado += 1;
             });

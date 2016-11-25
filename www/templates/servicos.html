@@ -8,7 +8,7 @@
         </ion-nav-back-button>
     </ion-nav-bar>
 
-    <ion-content padding="true" class="has-header">
+    <ion-content padding="true">
         <widget-clientes></widget-clientes>
         <h3 style="color:#000000; text-align:center;">{{serve.nome}}</h3>
         <ion-list ng-show="serve.contem_fotos > 0">
@@ -47,9 +47,9 @@
             <label class="item item-select">
                 <span class="input-label">Status</span>
                 <select ng-model="dados.status">
-                    <option value="1" {{dados.status_selected_1}}>Terminado</option>
-                    <option value="2" {{dados.status_selected_2}}>Pendiente</option>
-                    <option value="3" {{dados.status_selected_3}}>Disminuido</option>
+                    <option value="1" ng-selected="dados.status == 1">Terminado</option>
+                    <option value="2" ng-selected="dados.status == 2">Pendiente</option>
+                    <option value="3" ng-selected="dados.status == 3">Disminuido</option>
                 </select>
             </label>
             <div class="spacer" style="height: 21px;"></div>

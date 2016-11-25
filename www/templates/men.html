@@ -8,30 +8,37 @@
         </ion-nav-bar>
         <ion-nav-view name="menuContent"></ion-nav-view>
     </ion-side-menu-content>
-    
+
     <ion-side-menu side="left">
         <ion-header-bar class="bar-royal">
             <div class="title">Menú</div>
         </ion-header-bar>
         <ion-content padding="false" class="side-menu-left has-header ">
             <ion-list>
-                <ion-item class="item-icon-right" ui-sref="men.home" menu-close="">Home
+                <ion-item class="item-icon-right" ui-sref="men.home" menu-close="">Casa
                     <i class="icon ion-ios-home-outline"></i>
                 </ion-item>
-                <ion-item class="item-icon-right" ui-sref="men.listaDePDVs" menu-close="">Checklist
+                <ion-item class="item-icon-right" ui-sref="men.listaDePDVs" menu-close="">Lista de verificación
                     <i class="icon ion-ios-compose-outline"></i>
                 </ion-item>
                 <ion-item class="item-icon-right" ui-sref="men.editarUsuario" menu-close="">Perfil
                     <i class="icon ion-ios-person-outline"></i>
                 </ion-item>
-                <ion-item class="item-icon-right" ui-sref="men.pdvs" menu-close="">Descarga de PDV
-                    <i class="icon ion-android-arrow-back"></i>
+
+                <ion-item class="item-icon-right" ui-sref="men.sincronizacao" menu-close="">Sincronizar los datos
+                    <i class="icon ion-ios-cloud-upload"></i>
                 </ion-item>
-                <ion-item class="item-icon-right" ui-sref="men.logout" menu-close="">Dejar
-                    <i class="icon ion-android-arrow-back"></i>
+                <ion-item class="item-icon-right" ui-sref="men.pdvs" menu-close="">Descargar los datos iniciales
+                    <i class="icon ion-ios-cloud-download"></i>
                 </ion-item>
             </ion-list>
         </ion-content>
+        <ion-footer-bar align-title="left" class="bar-calm">
+            <h3 class="title">Versão {{versaoApp}}</h3>
+            <div class="buttons" menu-close ng-click="go('men.logout')">
+                <button class="button"><i class="fa fa-sign-out" aria-hidden="true"></i> Dejar</button>
+            </div>
+        </ion-footer-bar>
     </ion-side-menu>
-    
+
 </ion-side-menus>

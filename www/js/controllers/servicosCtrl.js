@@ -1,4 +1,4 @@
-angular.module('starter').controller('servicosCtrl', function ($rootScope, ExtraModuloFactory, FileModuloFactory, moment, $scope, $stateParams, ServicosTable, ServicosRespostasTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
+angular.module('starter').controller('servicosCtrl', function ($rootScope, ExtraModuloFactory, FileModuloFactory, ValidacaoModuloFactory, ValidacaoTable, moment, $scope, $stateParams, ServicosTable, ServicosRespostasTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
 
 
     LoadModuloFactory.show();
@@ -18,9 +18,6 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
         foto_depois: '',
         url_depois: '',
         status: 0,
-        status_selected_1: '',
-        status_selected_2: '',
-        status_selected_3: '',
         sincronizado: 0
     };
 
@@ -42,9 +39,6 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
             if (r !== null) {
                 $scope.dados = angular.merge({}, $scope.dados, r);
                 $scope.dados.fechamento = new Date(moment($scope.dados.fechamento).format('YYYY'), parseInt(moment($scope.dados.fechamento).format('MM')) - 1, moment($scope.dados.fechamento).format('DD'));
-                $scope.dados.status_selected_1 = ($scope.dados.status == 1 ? 'selected=selected' : '');
-                $scope.dados.status_selected_2 = ($scope.dados.status == 2 ? 'selected=selected' : '');
-                $scope.dados.status_selected_3 = ($scope.dados.status == 3 ? 'selected=selected' : '');
             }
             $scope.dados.cliente_id = $stateParams.id;
             $scope.dados.servico_id = $stateParams.tipo;
@@ -81,8 +75,22 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
         }, function (r) {
             if (r !== null) {
                 $scope.dados.id = r.id;
+                ValidacaoTable.save({
+                    observacao: 'Ativação Automatica',
+                    usuario_id: $rootScope.user.id,
+                    cliente_id: $stateParams.id,
+                    data: moment(new Date()).format('YYYY-MM-DD'),
+                    ativacao: 1,
+                    sincronizado: 0
+                }, function (r) {
+                    LoadModuloFactory.hide();
+                    ValidacaoModuloFactory.alert('Datos de guardado correctamente.');
+                });
+
+            } else {
+                LoadModuloFactory.hide();
+                ValidacaoModuloFactory.alert('Error al guardar los datos, vuelva a intentarlo.');
             }
-            LoadModuloFactory.hide();
         });
     };
 

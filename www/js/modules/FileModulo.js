@@ -1,5 +1,5 @@
 angular.module('starter')
-        .factory('FileModuloFactory', function (Config, StorageModuloFactory, $cordovaFileTransfer, $cordovaFile) {
+        .factory('FileModuloFactory', function (Config, StorageModuloFactory, $cordovaFileTransfer, $cordovaFile, ValidacaoModuloFactory) {
             var service = {};
             service.upload = function (url, targetPath, options, listener) {
                 var user = StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user);
@@ -30,33 +30,49 @@ angular.module('starter')
             };
 
             service.remove = function (file, listener) {
-                var filename = file.substr(file.lastIndexOf('/') + 1);
-                var dir = file.replace(filename, '');
-                $cordovaFile.removeFile(dir, filename)
-                        .then(function (success) {
-                            listener(true);
-                        }, function (error) {
-                            listener(false);
-                        });
+                if (!ValidacaoModuloFactory.empty(file)) {
+                    if (file.substr(0, 8) === 'file:///') {
+                        var filename = file.substr(file.lastIndexOf('/') + 1);
+                        var dir = file.replace(filename, '');
+                        $cordovaFile.removeFile(dir, filename)
+                                .then(function (success) {
+                                    listener(true);
+                                }, function (error) {
+                                    listener(false);
+                                });
+                    } else {
+                        listener(false);
+                    }
+                } else {
+                    listener(false);
+                }
             };
 
             service.asUrl = function (path, callback) {
-                window.resolveLocalFileSystemURL(path, gotFile, fail);
+                if (!ValidacaoModuloFactory.empty(path)) {
+                    if (path.substr(0, 8) === 'file:///') {
+                        window.resolveLocalFileSystemURL(path, gotFile, fail);
 
-                function fail(e) {
-                    alert('Cannot found requested file');
-                }
+                        function fail(e) {
+                            alert('Cannot found requested file');
+                        }
 
-                function gotFile(fileEntry) {
-                    fileEntry.file(function (file) {
-                        var reader = new FileReader();
-                        reader.onloadend = function (e) {
-                            var content = this.result;
-                            callback(content);
-                        };
-                        // The most important point, use the readAsDatURL Method from the file plugin
-                        reader.readAsDataURL(file);
-                    });
+                        function gotFile(fileEntry) {
+                            fileEntry.file(function (file) {
+                                var reader = new FileReader();
+                                reader.onloadend = function (e) {
+                                    var content = this.result;
+                                    callback(content);
+                                };
+                                // The most important point, use the readAsDatURL Method from the file plugin
+                                reader.readAsDataURL(file);
+                            });
+                        }
+                    } else {
+                        callback(path);
+                    }
+                } else {
+                    callback(path);
                 }
             };
 

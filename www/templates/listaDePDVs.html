@@ -1,4 +1,4 @@
-<ion-view title="Lista de PDVs" view-cache="false">
+<ion-view title="Lista de verificación" view-cache="false">
 
     <ion-nav-bar class="bar-royal">
         <ion-nav-buttons side="left">
@@ -13,7 +13,7 @@
         <button ng-if="search.length" class="button button-icon ion-close input-button button-search" ng-click="clearSearch()"> </button>
     </ion-header-bar>
 
-    <ion-content padding="true" class="has-header">
+    <ion-content padding="true">
         <ion-list>
             <ion-item collection-repeat="item in dados | filter:{nome:search}" class="item-avatar item-icon-right" ng-href="#/men/checklist/{{item.id}}" collection-item-width="'95%'">
                 <img ng-src="{{item.url}}">
@@ -23,6 +23,9 @@
             </ion-item>
 
         </ion-list>
+        
+        <msg></msg>
+        
         <ion-infinite-scroll
             on-infinite="loadMore()"
             distance="1%">

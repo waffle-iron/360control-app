@@ -1,5 +1,5 @@
 <ion-view title="Login" hide-nav-bar="true" view-cache="false">
-  <ion-content padding="true" scroll="false" class="has-header">
+  <ion-content padding="true" scroll="false">
     <div class="spacer" style="height: 32px;"></div>
     <form class="list">
       <div>
@@ -8,14 +8,14 @@
       <div class="spacer" style="height: 68px;"></div>
       <ion-list>
         <label class="item item-input">
-            <input type="text" placeholder="Username" ng-model="user.login">
+            <input type="text" placeholder="Nombre de usuario" ng-model="user.login">
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Password" ng-model="user.senha">
+          <input type="password" placeholder="Contraseña" ng-model="user.senha">
         </label>
       </ion-list>
       <div class="spacer" style="height: 40px;"></div>
-      <a ng-click="logar()" class="button button-balanced  button-block">Log in</a>
+      <a ng-click="logar()" class="button button-balanced  button-block">Iniciar la sesión</a>
     </form>
   </ion-content>
 </ion-view>

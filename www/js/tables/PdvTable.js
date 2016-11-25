@@ -16,7 +16,8 @@
                             endereco: 'VARCHAR(500)',
                             cidade: 'VARCHAR(500)',
                             telefone: 'VARCHAR(50)',
-                            tier_id: 'VARCHAR(2)'
+                            tier_id: 'VARCHAR(2)',
+                            sincronizado: 'INTEGER(1)'
                         };
                     };
 

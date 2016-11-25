@@ -1,4 +1,4 @@
-angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $scope, $stateParams, LoadModuloFactory, PdvTable, $ionicScrollDelegate, lodash) {
+angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $scope, $stateParams, LoadModuloFactory, ExtraModuloFactory, PdvTable, $ionicScrollDelegate, lodash) {
     $scope.dados = [];
     $scope.search = '';
     var maxLimit = 0;
@@ -33,6 +33,7 @@ angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $s
                     }
                 } else {
                     fim = true;
+                    ExtraModuloFactory.info($scope, 'No se encontraron registros.');
                 }
                 LoadModuloFactory.hide();
             });

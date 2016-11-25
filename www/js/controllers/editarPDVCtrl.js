@@ -1,4 +1,4 @@
-angular.module('starter').controller('editarPDVCtrl', function ($rootScope, $scope, $stateParams, PdvTable) {
+angular.module('starter').controller('editarPDVCtrl', function ($rootScope, $scope, $stateParams, PdvTable, ValidacaoModuloFactory) {
 
     $scope.pdv = {};
 
@@ -9,9 +9,13 @@ angular.module('starter').controller('editarPDVCtrl', function ($rootScope, $sco
     });
 
     $scope.salvar = function () {
+        $scope.pdv.sincronizado = 0;
         PdvTable.save($scope.pdv, function (r) {
             if (r !== null) {
                 $scope.pdv = r;
+                ValidacaoModuloFactory.alert('Datos de guardado correctamente.');
+            } else {
+                ValidacaoModuloFactory.alert('Error al guardar los datos, vuelva a intentarlo.');
             }
         });
     };
