@@ -76,7 +76,7 @@ angular.module('starter')
 
                     services.alert = function (msg, title, callback) {
                         var alertPopup = $ionicPopup.alert({
-                            title: title || 'Aviso!',
+                            title: title || 'Advertencia!',
                             template: '<div class="text-center">' + msg + '</div>'
                         });
 
@@ -89,9 +89,9 @@ angular.module('starter')
 
                     services.confirm = function (msg, options, callback) {
                         options = angular.merge({
-                            title: 'Aviso!',
+                            title: 'Advertencia!',
                             btOk: {
-                                text: '<b>Salvar</b>',
+                                text: '<b>Guardar</b>',
                                 type: 'button-positive'
                             },
                             btCancel: {

@@ -34,10 +34,10 @@ angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, 
         LoadModuloFactory.show();
         var erro = [];
         if (!ValidacaoModuloFactory.isNotNull($scope.user.login)) {
-            erro.push('Informe um usuário');
+            erro.push('Introduzca un usuario');
         }
         if (!ValidacaoModuloFactory.isNotNull($scope.user.senha)) {
-            erro.push('Informe uma senha');
+            erro.push('Introduzca una contraseña');
         }
         if (erro.length < 1) {
             var retornoLogin = function (retorno) {
@@ -47,7 +47,7 @@ angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, 
                     $rootScope.setAtualizarUser(retorno.data.response.result);
                     NavegacaoModuloFactory.go(NavegacaoModuloFactory.enum.home);
                 } else {
-                    ValidacaoModuloFactory.alert('Não foi possivel fazer o login tente novamente.');
+                    ValidacaoModuloFactory.alert('No se pudo iniciar sesión, inténtelo de nuevo.');
                 }
             };
             UsuariosApiFactory.login($scope.user, retornoLogin);

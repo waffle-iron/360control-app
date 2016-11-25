@@ -16,18 +16,19 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
             porcentagem: 0
         },
         tiers: {
-            nome: "Los productos y Niveles",
+            nome: "Los Productos y Niveles",
             total: 0,
             processado: 0,
             porcentagem: 0
         }
     };
 
-    LoadModuloFactory.show();
+
 
     $scope.replace = function (dados) {
         angular.forEach(dados, function (v, k) {
             v.sincronizado = 1;
+            v.cor = 0;
             PdvTable.replace(v, function (r) {
                 $scope.registro.pdv.processado += 1;
             });
@@ -46,31 +47,35 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
         });
     };
 
-    ServicosApi.index({}, function (r) {
-        if (ValidacaoModuloFactory.isParcial(r.status)) {
-            $scope.registro.servicos.total = r.data.response.paging.count;
-            angular.forEach(r.data.response.result, function (v, k) {
-                ServicosTable.replace(v, function (r) {
-                    $scope.registro.servicos.processado += 1;
-                    $scope.registro.servicos.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.servicos.total, $scope.registro.servicos.processado);
+    $scope.loadServicos = function () {
+        ServicosApi.index({}, function (r) {
+            if (ValidacaoModuloFactory.isParcial(r.status)) {
+                $scope.registro.servicos.total = r.data.response.paging.count;
+                angular.forEach(r.data.response.result, function (v, k) {
+                    ServicosTable.replace(v, function (r) {
+                        $scope.registro.servicos.processado += 1;
+                        $scope.registro.servicos.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.servicos.total, $scope.registro.servicos.processado);
+                    });
                 });
-            });
 
-        }
-    });
+            }
+        });
+    };
 
-    TiersItensApi.index({}, function (r) {
-        if (ValidacaoModuloFactory.isParcial(r.status)) {
-            $scope.registro.tiers.total = r.data.response.paging.count;
-            angular.forEach(r.data.response.result, function (v, k) {
-                TiersItensTable.replace(v, function (r) {
-                    $scope.registro.tiers.processado += 1;
-                    $scope.registro.tiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.tiers.total, $scope.registro.tiers.processado);
+    $scope.loadTiers = function () {
+        TiersItensApi.index({}, function (r) {
+            if (ValidacaoModuloFactory.isParcial(r.status)) {
+                $scope.registro.tiers.total = r.data.response.paging.count;
+                angular.forEach(r.data.response.result, function (v, k) {
+                    TiersItensTable.replace(v, function (r) {
+                        $scope.registro.tiers.processado += 1;
+                        $scope.registro.tiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.tiers.total, $scope.registro.tiers.processado);
+                    });
                 });
-            });
 
-        }
-    });
+            }
+        });
+    };
 
     $scope._atualizar = function () {
         $timeout(function () {
@@ -86,11 +91,18 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
         LoadModuloFactory.show();
         if ($scope.registro.pdv.porcentagem >= 100 && $scope.registro.servicos.porcentagem >= 100 && $scope.registro.tiers.porcentagem >= 100) {
             LoadModuloFactory.hide();
+            ValidacaoModuloFactory.alert('Parabéns! Los datos enviados com éxito.');
         } else {
             $scope._atualizar();
         }
     };
-    $scope._atualizar();
-    $scope.loadPdvs();
-
+    ValidacaoModuloFactory.confirm('Esta operación consume tiempo, confirma la ejecución de la misma.', {}, function (r, ok) {
+        if (ok === true) {
+            LoadModuloFactory.show();
+            $scope._atualizar();
+            $scope.loadPdvs();
+            $scope.loadServicos();
+            $scope.loadTiers();
+        }
+    });
 });

@@ -18,7 +18,7 @@ angular.module('starter').controller('sincronizacaoCtrl', function ($rootScope, 
             concluido: false
         },
         tiers: {
-            nome: "Los productos y Niveles",
+            nome: "Los Productos y Niveles",
             total: 0,
             processado: 0,
             porcentagem: 0,
@@ -93,20 +93,21 @@ angular.module('starter').controller('sincronizacaoCtrl', function ($rootScope, 
     $scope._hide = function () {
         $scope.registro.pdv.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.pdv.total, $scope.registro.pdv.processado);
         if ($scope.registro.pdv.concluido === false) {
-            $scope.registro.pdv.porcentagem = $scope.registro.pdv.total == 100 ? true : false;
+            $scope.registro.pdv.porcentagem = $scope.registro.pdv.porcentagem == 100 ? true : false;
         }
         $scope.registro.servicos.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.servicos.total, $scope.registro.servicos.processado);
         if ($scope.registro.servicos.concluido === false) {
-            $scope.registro.servicos.porcentagem = $scope.registro.servicos.total == 100 ? true : false;
+            $scope.registro.servicos.porcentagem = $scope.registro.servicos.porcentagem == 100 ? true : false;
         }
         $scope.registro.tiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.tiers.total, $scope.registro.tiers.processado);
         if ($scope.registro.tiers.concluido === false) {
-            $scope.registro.tiers.porcentagem = $scope.registro.tiers.total == 100 ? true : false;
+            $scope.registro.tiers.porcentagem = $scope.registro.tiers.porcentagem == 100 ? true : false;
         }
         LoadModuloFactory.hide();
         LoadModuloFactory.show();
         if ($scope.registro.pdv.concluido === true && $scope.registro.servicos.concluido === true && $scope.registro.tiers.concluido === true) {
             LoadModuloFactory.hide();
+            ValidacaoModuloFactory.alert('Parabéns! Los datos enviados com éxito.');
         } else {
             $scope._atualizar();
         }

@@ -2,7 +2,7 @@ angular.module('starter').controller('editarUsuarioCtrl', function ($rootScope, 
 
     $scope.salvar = function () {
         $rootScope.setAtualizarUser($rootScope.user);
-        ValidacaoModuloFactory.alert('Datos de guardado correctamente.');
+        ValidacaoModuloFactory.alert('Guardado de datos com éxito.');
     };
 
 });

@@ -2,14 +2,14 @@
     <ion-side-menu-content>
         <ion-nav-bar class="bar-royal">
             <ion-nav-back-button></ion-nav-back-button>
-            <ion-nav-buttons side="left">
-                <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+            <ion-nav-buttons side="right">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="right"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
         <ion-nav-view name="menuContent"></ion-nav-view>
     </ion-side-menu-content>
 
-    <ion-side-menu side="left">
+    <ion-side-menu side="right">
         <ion-header-bar class="bar-royal">
             <div class="title">Menú</div>
         </ion-header-bar>
@@ -18,25 +18,25 @@
                 <ion-item class="item-icon-right" ui-sref="men.home" menu-close="">Casa
                     <i class="icon ion-ios-home-outline"></i>
                 </ion-item>
-                <ion-item class="item-icon-right" ui-sref="men.listaDePDVs" menu-close="">Lista de verificación
+                <ion-item class="item-icon-right" ui-sref="men.listaDePDVs" menu-close="">Lista de Verificación
                     <i class="icon ion-ios-compose-outline"></i>
                 </ion-item>
                 <ion-item class="item-icon-right" ui-sref="men.editarUsuario" menu-close="">Perfil
                     <i class="icon ion-ios-person-outline"></i>
                 </ion-item>
 
-                <ion-item class="item-icon-right" ui-sref="men.sincronizacao" menu-close="">Sincronizar los datos
+                <ion-item class="item-icon-right" ui-sref="men.sincronizacao" menu-close="">Actualizar Base de Datos
                     <i class="icon ion-ios-cloud-upload"></i>
                 </ion-item>
-                <ion-item class="item-icon-right" ui-sref="men.pdvs" menu-close="">Descargar los datos iniciales
+                <ion-item class="item-icon-right" ui-sref="men.pdvs" menu-close="">Descargar Los Datos Iniciales
                     <i class="icon ion-ios-cloud-download"></i>
                 </ion-item>
             </ion-list>
         </ion-content>
-        <ion-footer-bar align-title="left" class="bar-calm">
-            <h3 class="title">Versão {{versaoApp}}</h3>
+        <ion-footer-bar align-title="left" class="bar-stable">
+            <h4 class="title" style="font-size: 11px;">Versão {{versaoApp}}</h4>
             <div class="buttons" menu-close ng-click="go('men.logout')">
-                <button class="button"><i class="fa fa-sign-out" aria-hidden="true"></i> Dejar</button>
+                <button class="button button-royal"><i class="fa fa-sign-out" aria-hidden="true"></i> Dejar</button>
             </div>
         </ion-footer-bar>
     </ion-side-menu>

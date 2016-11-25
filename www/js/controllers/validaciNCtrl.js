@@ -42,13 +42,14 @@ angular.module('starter').controller('validaciNCtrl', function ($rootScope, $sco
         }, function (r) {
             if (r !== null) {
                 $scope.dados.id = r.id;
+                PdvTable.atualizarCor($scope.pdv.id, $scope.pdv.cor);
                 debug($scope.dados);
                 LoadModuloFactory.hide();
-                ValidacaoModuloFactory.alert('Datos de guardado correctamente.');
+                ValidacaoModuloFactory.alert('Guardado de datos com éxito.');
             } else {
                 ValidacaoModuloFactory.alert('Error al guardar los datos, vuelva a intentarlo.');
             }
-            
+
         });
     };
 

@@ -13,7 +13,7 @@ angular.module('starter').controller('editarPDVCtrl', function ($rootScope, $sco
         PdvTable.save($scope.pdv, function (r) {
             if (r !== null) {
                 $scope.pdv = r;
-                ValidacaoModuloFactory.alert('Datos de guardado correctamente.');
+                ValidacaoModuloFactory.alert('Guardado de datos com éxito.');
             } else {
                 ValidacaoModuloFactory.alert('Error al guardar los datos, vuelva a intentarlo.');
             }

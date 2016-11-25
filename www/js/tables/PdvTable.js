@@ -17,7 +17,8 @@
                             cidade: 'VARCHAR(500)',
                             telefone: 'VARCHAR(50)',
                             tier_id: 'VARCHAR(2)',
-                            sincronizado: 'INTEGER(1)'
+                            sincronizado: 'INTEGER(1)',
+                            cor: 'INTEGER(1)'
                         };
                     };
 
@@ -65,7 +66,7 @@
                         services.setTable();
                         TableModuloFactory.get(v, function (resp) {
                             if (resp !== null) {
-                                resp.url = 'img/p' + resp.tier_id + '.png';
+                                resp = services.setColor(resp);
                             }
                             r(resp);
                         });
@@ -75,7 +76,7 @@
                         services.setTable();
                         TableModuloFactory.first(o, function (resp) {
                             if (resp !== null) {
-                                resp.url = 'img/p' + resp.tier_id + '.png';
+                                resp = services.setColor(resp);
                             }
                             r(resp);
                         });
@@ -86,7 +87,7 @@
                         TableModuloFactory.all(o, function (resp) {
                             if (resp !== null) {
                                 angular.forEach(resp, function (v, k) {
-                                    resp[k]['url'] = 'img/p' + v.tier_id + '.png';
+                                    resp[k] = services.setColor(resp[k]);
                                 });
                             }
                             r(resp);
@@ -111,6 +112,31 @@
                     services.query = function (q, r, p) {
                         services.setTable();
                         TableModuloFactory.query(q, r, p);
+                    };
+
+                    services.atualizarCor = function (id, corAtual) {
+                        var cor = 0;
+                        if (corAtual < 1) {
+                            cor = 1;
+                        } else if (corAtual <= 2) {
+                            cor = 2;
+                        }
+                        services.query('UPDATE pdv SET cor=' + cor + ' WHERE id = ' + id, function (r) {
+
+                        }, []);
+                    };
+
+                    services.setColor = function (v) {
+                        v.styleColor = '';
+                        if (v.cor < 1) {
+                            v.styleColor = 'preto';
+                        } else if (v.cor < 2) {
+                            v.styleColor = 'azul';
+                        } else {
+                            v.styleColor = 'verde';
+                        }
+                        v.url = 'img/p' + v.tier_id + '.png';
+                        return v;
                     };
 
                     return services;

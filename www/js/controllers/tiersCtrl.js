@@ -1,9 +1,10 @@
-angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraModuloFactory, FileModuloFactory, moment, ValidacaoTable, ValidacaoModuloFactory, $scope, $stateParams, TiersItensRespostasTable, TiersItensTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
+angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraModuloFactory, FileModuloFactory, $ionicModal, moment, ValidacaoTable, ValidacaoModuloFactory, $scope, $stateParams, TiersItensRespostasTable, TiersItensTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
 
     LoadModuloFactory.show();
     $scope.id_pdv = $stateParams.id;
     $scope.pdv = [];
     $scope.dados = [];
+    $scope.datalhes_foto = null;
 
     PdvTable.get($stateParams.id, function (r) {
         if (r !== null) {
@@ -60,8 +61,25 @@ angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraMod
         });
     };
 
+
+    $ionicModal.fromTemplateUrl('my-foto.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.modal = modal;
+    });
+    $scope.closeModal = function () {
+        $scope.modal.hide();
+    };
+
+    $scope.fotoGrande = function (l) {
+        $scope.datalhes_foto = l.TiersItensurl;
+        $scope.modal.show();
+    };
+
+
     $scope.salvar = function () {
-        var t = ValidacaoModuloFactory.count($scope.dados) -1;
+        var t = ValidacaoModuloFactory.count($scope.dados) - 1;
 
         LoadModuloFactory.show();
         angular.forEach($scope.dados, function (v, k) {
@@ -81,15 +99,16 @@ angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraMod
                     debug(k);
                 }
                 if (k >= t) {
+                    PdvTable.atualizarCor($scope.pdv.id, $scope.pdv.cor);
                     LoadModuloFactory.hide();
-                    ValidacaoModuloFactory.alert('Datos de guardado correctamente.');
+                    ValidacaoModuloFactory.alert('Guardado de datos com éxito.');
                 }
 
             });
         });
 
         ValidacaoTable.save({
-            observacao: 'Ativação Automatica',
+            observacao: 'La activación automática',
             usuario_id: $rootScope.user.id,
             cliente_id: $stateParams.id,
             data: moment(new Date()).format('YYYY-MM-DD'),

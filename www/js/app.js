@@ -26,8 +26,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
             timeout: 35000,
             database: 'control',
             debug: _debug,
-            avisoSemConexao: 'Essa página necessita de conexão com a internet para ser exibida.',
-            avisoGpsInattivo: 'Verifique se o seu GPS esta ativo e com conexão com a internet para trazer os clientes mais próximo à você.'
+            avisoSemConexao: 'Esta página requiere conexión a Internet para la vista.',
+            avisoGpsInattivo: 'Asegúrese de que su GPS está activo y conectado a Internet para llevar a los clientes más cerca de usted.'
         })
 
         .run(function (NavegacaoModuloFactory, Config, $cordovaDevice, $rootScope, StorageModuloFactory, $ionicPlatform) {

@@ -7,7 +7,7 @@ angular.module('starter')
                     services.show = function () {
                         debug('open load');
                         $ionicLoading.show({
-                            template: '<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><div class="padding-top">Aguarde ...</div></div>'
+                            template: '<div><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i><div class="padding-top">Esperar ...</div></div>'
                         }).then(function () {
                         });
                     };

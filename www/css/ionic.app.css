@@ -12144,6 +12144,9 @@ a.button {
   overflow: visible;
   clip: auto; }
 
+body {
+  background-color: #F7F1F3; }
+
 .button-search {
   right: 0;
   position: absolute; }
@@ -12153,10 +12156,29 @@ a.button {
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  width: 100%; }
+  width: 65%; }
 
 .bar.bar-royal {
   border-color: #5b1929;
   background-color: #7b2238;
   background-image: linear-gradient(0deg, #5b1929, #5b1929 50%, transparent 50%);
   color: #fff; }
+
+.button.button-royal {
+  border-color: transparent;
+  background-color: #7b2238;
+  color: #fff; }
+
+.button.button-dourado {
+  border-color: transparent;
+  background-color: #b89738;
+  color: #fff; }
+
+.preto {
+  color: #000; }
+
+.azul {
+  color: blue; }
+
+.verde {
+  color: green; }

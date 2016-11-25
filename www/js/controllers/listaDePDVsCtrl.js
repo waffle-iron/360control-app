@@ -56,9 +56,4 @@ angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $s
         $ionicScrollDelegate.scrollTop();
     };
 
-    /*$scope.$on('$stateChangeSuccess', function () {
-     $scope.loadMore();
-     });*/
-
-
 });

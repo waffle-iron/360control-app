@@ -1,13 +1,6 @@
 <ion-view title="Registro Fotográfico" view-cache="false">
 
-    <ion-nav-bar class="bar-royal">
-        <ion-nav-buttons side="left">
-            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-        </ion-nav-buttons>
-        <ion-nav-back-button>
-        </ion-nav-back-button>
-    </ion-nav-bar>
-
+    
     <ion-content padding="true">
 
         <widget-clientes></widget-clientes>
@@ -16,11 +9,11 @@
         <form class="list">
             <div ng-repeat="l in dados">
                 <div class="spacer" style="height: 21px;"></div>
-                <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto(l)">
-                    <img ng-src="{{l.TiersItensurl}}">
+                <ion-item class="item-avatar item-icon-right">
+                    <img ng-src="{{l.TiersItensurl}}" ng-click="fotoGrande(l)">
                     <h2>{{l.item}}</h2>
                     <p>Cantidad estándar: {{l.quantidade}}</p>
-                    <i class="icon ion-ios-camera"></i>
+                    <i class="icon ion-ios-camera" ng-click="tirarFoto(l)"></i>
                 </ion-item>
                 <label class="item item-input">
                     <span class="input-label">Instalado</span>
@@ -35,3 +28,15 @@
 
     </ion-content>
 </ion-view>
+
+<script id="my-foto.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-royal">
+        <h1 class="title">Detalles de la foto</h1>
+        <button class="button button-icon button-clear ion-close-circled" ng-click="closeModal()"></button>
+    </ion-header-bar>    
+    <ion-content>
+    <img ng-src="{{datalhes_foto}}" style="width: 99%;">
+    </ion-content>
+  </ion-modal-view>
+</script>

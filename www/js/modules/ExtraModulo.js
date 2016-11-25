@@ -28,7 +28,6 @@ angular.module('starter')
                                         return dados;
                                     } else {
                                         dados[alias] = dados[campo];
-                                        alert(dados[alias]);
                                         return dados;
                                     }
                                 } else {

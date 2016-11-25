@@ -54,7 +54,6 @@ angular.module('starter')
                         window.resolveLocalFileSystemURL(path, gotFile, fail);
 
                         function fail(e) {
-                            alert('Cannot found requested file');
                         }
 
                         function gotFile(fileEntry) {

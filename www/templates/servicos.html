@@ -1,48 +1,41 @@
 <ion-view title="{{serve.nome}}" view-cache="false">
 
-    <ion-nav-bar class="bar-royal">
-        <ion-nav-buttons side="left">
-            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-        </ion-nav-buttons>
-        <ion-nav-back-button>
-        </ion-nav-back-button>
-    </ion-nav-bar>
-
+    
     <ion-content padding="true">
         <widget-clientes></widget-clientes>
         <h3 style="color:#000000; text-align:center;">{{serve.nome}}</h3>
         <ion-list ng-show="serve.contem_fotos > 0">
-            <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_antes', 'url_antes')">
-                <img ng-src="{{dados.url_antes}}">
+            <ion-item class="item-avatar item-icon-right">
+                <img ng-src="{{dados.url_antes}}" ng-click="fotoGrande('url_antes')">
                 <h2>Antes</h2>
                 <p>Registro Fotográfico</p>
-                <i class="icon ion-ios-camera"></i>
+                <i class="icon ion-ios-camera" ng-click="tirarFoto('foto_antes', 'url_antes')"></i>
             </ion-item>
-            <ion-item class="item-avatar item-icon-right" ng-click="tirarFoto('foto_depois', 'url_depois')">
-                <img ng-src="{{dados.url_depois}}">
+            <ion-item class="item-avatar item-icon-right">
+                <img ng-src="{{dados.url_depois}}" ng-click="fotoGrande('url_depois')">
                 <h2>Después</h2>
                 <p>Registro Fotográfico</p>
-                <i class="icon ion-ios-camera"></i>
+                <i class="icon ion-ios-camera" ng-click="tirarFoto('foto_depois', 'url_depois')"></i>
             </ion-item>
         </ion-list>
-        <a  ng-show="serve.contem_fotos < 1" style="font-size:18px;" class="button button-energized button-block icon-left ion-android-camera" href="#/men/tiers/{{id_pdv}}">Registro Fotográfico</a>
+        <a  ng-show="serve.contem_fotos < 1" style="font-size:18px;" class="button button-dourado button-block icon-left ion-android-camera" href="#/men/tiers/{{id_pdv}}">Registro Fotográfico</a>
         <div class="spacer" style="height: 21px;"></div>
         <form class="list">
             <div class="branco">
 
                 <label class="item item-input item-stacked-label background: #ffc">
                     <span class="input-label">Observación</span>
-                    <input type="text" ng-model="dados.observacao" placeholder="Campo de texto">
+                    <textarea placeholder="Campo de texto" rows="4" ng-model="dados.observacao"></textarea>
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Pendiente interna</span>
-                    <input type="text" ng-model="dados.pendencia" placeholder="Campo de texto">
+                    <textarea placeholder="Campo de texto" rows="4" ng-model="dados.pendencia"></textarea>
                 </label>
             </div>
             <div class="spacer" style="height: 21px;"></div>
             <label class="item item-input">
                 <span class="input-label">Fecha</span>
-                <input type="date" ng-model="dados.fechamento" placeholder="Informe uma data">
+                <input type="date" ng-model="dados.fechamento" placeholder="Introduzca una fecha">
             </label>
             <label class="item item-select">
                 <span class="input-label">Status</span>
@@ -58,3 +51,15 @@
         </form>
     </ion-content>
 </ion-view>
+
+<script id="my-foto.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar-royal">
+        <h1 class="title">Detalles de la foto</h1>
+        <button class="button button-icon button-clear ion-close-circled" ng-click="closeModal()"></button>
+    </ion-header-bar>    
+    <ion-content>
+    <img ng-src="{{datalhes_foto}}" style="width: 99%;">
+    </ion-content>
+  </ion-modal-view>
+</script>

@@ -1,20 +1,13 @@
 <ion-view title="Validación" view-cache="false">
-    <ion-nav-bar class="bar-royal">
-        <ion-nav-buttons side="left">
-            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-        </ion-nav-buttons>
-        <ion-nav-back-button>
-        </ion-nav-back-button>
-    </ion-nav-bar>
-    <ion-content padding="true">
 
+    <ion-content padding="true">
         <widget-clientes></widget-clientes>
 
         <form class="list">
             <div class="branco">
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Observación</span>
-                    <input type="text" placeholder="Campo de texto" ng-model="dados.observacao">
+                    <textarea placeholder="Campo de texto" rows="4" ng-model="dados.observacao"></textarea>
                 </label>
             </div>
             <div class="spacer" style="height: 21px;"></div>

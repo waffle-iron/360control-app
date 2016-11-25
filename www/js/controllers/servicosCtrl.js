@@ -1,10 +1,11 @@
-angular.module('starter').controller('servicosCtrl', function ($rootScope, ExtraModuloFactory, FileModuloFactory, ValidacaoModuloFactory, ValidacaoTable, moment, $scope, $stateParams, ServicosTable, ServicosRespostasTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
+angular.module('starter').controller('servicosCtrl', function ($rootScope, ExtraModuloFactory, $ionicModal, FileModuloFactory, ValidacaoModuloFactory, ValidacaoTable, moment, $scope, $stateParams, ServicosTable, ServicosRespostasTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
 
 
     LoadModuloFactory.show();
     $scope.id_pdv = $stateParams.id;
     $scope.serve = [];
     $scope.pdv = [];
+    $scope.datalhes_foto = null;
     $scope.dados = {
         id: '',
         usuario_id: $rootScope.user.id,
@@ -58,6 +59,21 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
         });
     };
 
+    $ionicModal.fromTemplateUrl('my-foto.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.modal = modal;
+    });
+    $scope.closeModal = function () {
+        $scope.modal.hide();
+    };
+
+    $scope.fotoGrande = function (campo2) {
+        $scope.datalhes_foto = $scope.dados[campo2];
+        $scope.modal.show();
+    };
+
     $scope.salvar = function () {
         LoadModuloFactory.show();
         ServicosRespostasTable.save({
@@ -75,8 +91,9 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
         }, function (r) {
             if (r !== null) {
                 $scope.dados.id = r.id;
+                PdvTable.atualizarCor($scope.pdv.id, $scope.pdv.cor);
                 ValidacaoTable.save({
-                    observacao: 'Ativação Automatica',
+                    observacao: 'La activación automática',
                     usuario_id: $rootScope.user.id,
                     cliente_id: $stateParams.id,
                     data: moment(new Date()).format('YYYY-MM-DD'),
@@ -84,7 +101,7 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
                     sincronizado: 0
                 }, function (r) {
                     LoadModuloFactory.hide();
-                    ValidacaoModuloFactory.alert('Datos de guardado correctamente.');
+                    ValidacaoModuloFactory.alert('Guardado de datos com éxito.');
                 });
 
             } else {
