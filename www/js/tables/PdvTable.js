@@ -65,7 +65,7 @@
                         services.setTable();
                         TableModuloFactory.get(v, function (resp) {
                             if (resp !== null) {
-                                resp.url = '/img/p' + resp.tier_id + '.png';
+                                resp.url = 'img/p' + resp.tier_id + '.png';
                             }
                             r(resp);
                         });
@@ -75,7 +75,7 @@
                         services.setTable();
                         TableModuloFactory.first(o, function (resp) {
                             if (resp !== null) {
-                                resp.url = '/img/p' + resp.tier_id + '.png';
+                                resp.url = 'img/p' + resp.tier_id + '.png';
                             }
                             r(resp);
                         });
@@ -86,7 +86,7 @@
                         TableModuloFactory.all(o, function (resp) {
                             if (resp !== null) {
                                 angular.forEach(resp, function (v, k) {
-                                    resp[k]['url'] = '/img/p' + v.tier_id + '.png';
+                                    resp[k]['url'] = 'img/p' + v.tier_id + '.png';
                                 });
                             }
                             r(resp);
