@@ -44,8 +44,9 @@
                         services.setTable();
                         services.first({where: 'usuario_id = ' + o.usuario_id + ' AND cliente_id = ' + o.cliente_id}, function (res) {
                             if (res !== null) {
-                                r.id = res.id;
+                                o.id = res.id;
                             }
+                            services.setTable();
                             TableModuloFactory.save(o, r);
                         });
                     };

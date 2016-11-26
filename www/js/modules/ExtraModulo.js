@@ -106,7 +106,8 @@ angular.module('starter')
                     };
 
                     services.calulcarPorcentagem = function (total, processado) {
-                        return Math.round((((total - processado) / total) * 100) - 100) * -1;
+                        var r = Math.round((((total - processado) / total) * 100) - 100) * -1;
+                        return  r || 0;
                     };
 
                     return services;

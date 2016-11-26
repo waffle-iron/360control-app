@@ -1,4 +1,4 @@
-angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, NavegacaoModuloFactory, UsuariosApiFactory, LoadModuloFactory, ValidacaoModuloFactory, TiersItensRespostasTable, StorageModuloFactory, PdvTable, ServicosTable, UsuariosTable, ValidacaoTable, ServicosRespostasTable, TiersItensTable) {
+angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, NavegacaoModuloFactory, UsuariosApi, LoadModuloFactory, ValidacaoModuloFactory, TiersItensRespostasTable, StorageModuloFactory, PdvTable, ServicosTable, UsuariosTable, ValidacaoTable, ServicosRespostasTable, TiersItensTable) {
 
     LoadModuloFactory.show();
     PdvTable.init(function (r) {
@@ -50,7 +50,7 @@ angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, 
                     ValidacaoModuloFactory.alert('No se pudo iniciar sesión, inténtelo de nuevo.');
                 }
             };
-            UsuariosApiFactory.login($scope.user, retornoLogin);
+            UsuariosApi.login($scope.user, retornoLogin);
         } else {
             LoadModuloFactory.hide();
             angular.forEach(erro, function (v, k) {

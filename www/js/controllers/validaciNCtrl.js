@@ -6,7 +6,7 @@ angular.module('starter').controller('validaciNCtrl', function ($rootScope, $sco
         observacao: '',
         usuario_id: $rootScope.user.id,
         cliente_id: $stateParams.id,
-        data: '',
+        data: new Date(moment(new Date()).format('YYYY'), parseInt(moment(new Date()).format('MM')) - 1, moment(new Date()).format('DD')),
         ativacao: 0
     };
 

@@ -6,6 +6,7 @@ angular.module('starter')
                         local: {},
                         session: {},
                         enum: {
+                            dataUltimaSincronizacao: 'data_ultima_sincronizacao',
                             user: 'user',
                             sincronizacaoInicial: 'sincronizacao_inicial',
                             home: 'home',

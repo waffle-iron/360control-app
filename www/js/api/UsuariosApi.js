@@ -1,5 +1,5 @@
 angular.module('starter')
-        .factory('UsuariosApiFactory', ['RequestModuloFactory',
+        .factory('UsuariosApi', ['RequestModuloFactory',
             function (RequestModuloFactory) {
 
                 var services = {};

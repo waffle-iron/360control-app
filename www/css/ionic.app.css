@@ -12144,7 +12144,7 @@ a.button {
   overflow: visible;
   clip: auto; }
 
-body {
+.pane {
   background-color: #F7F1F3; }
 
 .button-search {
@@ -12174,11 +12174,31 @@ body {
   background-color: #b89738;
   color: #fff; }
 
+.button.button-dourado {
+  border-color: transparent;
+  background-color: #b89738;
+  color: #fff; }
+
+.button.button-dourado {
+  border-color: transparent;
+  background-color: #b89738;
+  color: #fff; }
+
+.button.button-dourado {
+  border-color: transparent;
+  background-color: #b89738;
+  color: #fff; }
+
+.button.button-dourado {
+  border-color: transparent;
+  background-color: #b89738;
+  color: #fff; }
+
 .preto {
   color: #000; }
 
 .azul {
-  color: blue; }
+  color: #3300FF; }
 
 .verde {
-  color: green; }
+  color: #46A217; }

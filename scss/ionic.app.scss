@@ -22,7 +22,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "www/lib/ionic/scss/ionic";
 @import "font-awesome";
 
-body{
+.pane{
     background-color: #F7F1F3;
 }
 
@@ -86,8 +86,8 @@ body{
     color: #000;
 }
 .azul{
-    color: blue;
+    color: #3300FF;
 }
 .verde{
-    color: green;
+    color: #46A217;
 }
