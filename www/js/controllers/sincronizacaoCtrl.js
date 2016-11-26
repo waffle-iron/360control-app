@@ -1,4 +1,4 @@
-angular.module('starter').controller('sincronizacaoCtrl', function (UsuariosApi, $rootScope, moment, ExtraModuloFactory, $timeout, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, TiersItensRespostasTable, TiersItensRespostasApi, FileModuloFactory, ServicosRespostasTable, ServicosRespostasApi, ValidacaoApi, ValidacaoTable, StorageModuloFactory) {
+angular.module('starter').controller('sincronizacaoCtrl', function (UsuariosApi, $rootScope, UsuariosApi, moment, ExtraModuloFactory, $timeout, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, TiersItensRespostasTable, TiersItensRespostasApi, FileModuloFactory, ServicosRespostasTable, ServicosRespostasApi, ValidacaoApi, ValidacaoTable, StorageModuloFactory) {
 
     var seq = 1;
 
@@ -120,7 +120,11 @@ angular.module('starter').controller('sincronizacaoCtrl', function (UsuariosApi,
                 });
             });
         });
-    }
+
+        UsuariosApi.edit($scope.user.id, $scope.user, function (e) {
+        });
+    };
+
     $scope.vDownload = function () {
         ValidacaoApi.index({}, function (r) {
             if (ValidacaoModuloFactory.isParcial(r.status)) {

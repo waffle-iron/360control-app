@@ -1,6 +1,7 @@
-angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModuloFactory, $timeout, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, ServicosTable, ServicosApi, TiersItensApi, TiersItensTable) {
+angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModuloFactory, $timeout, StorageModuloFactory, moment, ValidacaoTable, ValidacaoApi, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, ServicosTable, ServicosApi, TiersItensApi, TiersItensTable) {
 
     var seq = 1;
+    var seq2 = 1;
 
     $scope.registro = {
         pdv: {
@@ -20,6 +21,13 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
             total: 0,
             processado: 0,
             porcentagem: 0
+        },
+        validacaoDownload: {
+            nome: "Validação Baixar",
+            total: 0,
+            processado: 0,
+            porcentagem: 0,
+            concluido: false
         }
     };
 
@@ -28,7 +36,7 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
     $scope.replace = function (dados) {
         angular.forEach(dados, function (v, k) {
             v.sincronizado = 1;
-            v.cor = 0;
+            v.cor = v.cor || 0;
             PdvTable.replace(v, function (r) {
                 $scope.registro.pdv.processado += 1;
             });
@@ -43,6 +51,33 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
                 $scope.registro.pdv.total = r.data.response.paging.count;
                 seq += 1;
                 $scope.replace(r.data.response.result);
+            }
+        });
+    };
+
+    $scope.vDownload = function () {
+        ValidacaoApi.index({page: seq2, data_hora_sincronizacao: null}, function (r) {
+            if (ValidacaoModuloFactory.isParcial(r.status)) {
+                $scope.registro.validacaoDownload.total = r.data.response.paging.count;
+                seq2 += 1;
+                $scope.registro.validacaoDownload.concluido = $scope.registro.validacaoDownload.total > 0 ? false : true;
+                angular.forEach(r.data.response.result, function (v, k) {
+                    var ret = {
+                        usuario_id: v.usuario_id,
+                        cliente_id: v.cliente_id,
+                        observacao: v.observacao,
+                        data: moment(v.data || new Date()).format('YYYY-MM-DD'),
+                        ativacao: v.ativacao,
+                        sincronizado: 1
+                    };
+                    ValidacaoTable.save(ret, function (r) {
+                        $scope.registro.validacaoDownload.processado += 1;
+                        $scope.registro.validacaoDownload.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.validacaoDownload.total, $scope.registro.validacaoDownload.processado);
+                    });
+                });
+                $scope.vDownload();
+            } else {
+                $scope.registro.validacaoDownload.concluido = true;
             }
         });
     };
@@ -85,12 +120,28 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
 
     $scope._hide = function () {
         $scope.registro.pdv.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.pdv.total, $scope.registro.pdv.processado);
+        if ($scope.registro.pdv.concluido === false) {
+            $scope.registro.pdv.concluido = $scope.registro.pdv.porcentagem >= 100 ? true : false;
+        }
         $scope.registro.servicos.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.servicos.total, $scope.registro.servicos.processado);
+        if ($scope.registro.servicos.concluido === false) {
+            $scope.registro.servicos.concluido = $scope.registro.servicos.porcentagem >= 100 ? true : false;
+        }
         $scope.registro.tiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.tiers.total, $scope.registro.tiers.processado);
+        if ($scope.registro.tiers.concluido === false) {
+            $scope.registro.tiers.concluido = $scope.registro.tiers.porcentagem >= 100 ? true : false;
+        }
+
+        $scope.registro.validacaoDownload.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.validacaoDownload.total, $scope.registro.validacaoDownload.processado);
+        if ($scope.registro.validacaoDownload.concluido === false) {
+            $scope.registro.validacaoDownload.concluido = $scope.registro.validacaoDownload.processado >= $scope.registro.validacaoDownload.total ? true : false;
+        }
+
         LoadModuloFactory.hide();
         LoadModuloFactory.show();
-        if ($scope.registro.pdv.porcentagem >= 100 && $scope.registro.servicos.porcentagem >= 100 && $scope.registro.tiers.porcentagem >= 100) {
+        if ($scope.registro.pdv.concluido === true && $scope.registro.servicos.concluido === true && $scope.registro.tiers.concluido === true && $scope.registro.validacaoDownload.concluido === true) {
             LoadModuloFactory.hide();
+            StorageModuloFactory.local.set(StorageModuloFactory.enum.dataUltimaSincronizacao, moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00');
             ValidacaoModuloFactory.alert('Parabéns! Los datos enviados com éxito.');
         } else {
             $scope._atualizar();
@@ -100,9 +151,10 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
         if (ok === true) {
             LoadModuloFactory.show();
             $scope._atualizar();
-            $scope.loadPdvs();
             $scope.loadServicos();
             $scope.loadTiers();
+            $scope.loadPdvs();
+            $scope.vDownload();
         }
     });
 });

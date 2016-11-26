@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="br.com.bptech" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="br.com.bptech" version="01.00.01" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>CND 360</name>
   <description>
         Aplicativo CND 360
@@ -15,7 +15,7 @@
   <allow-intent href="geo:*"/>
   <allow-intent href="*"/>
   <allow-navigation href="*"/>
-  <allow-navigation href="http://192.168.1.35:8100"/>
+  <allow-navigation href="http://192.168.1.34:8100"/>
   <preference name="loadUrlTimeoutValue" value="700000"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>

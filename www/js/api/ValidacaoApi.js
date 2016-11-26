@@ -6,9 +6,11 @@ angular.module('starter')
 
 
                 services.index = function (options, retorno) {
-                    options.limit = 1000;
                     var d = StorageModuloFactory.local.get(StorageModuloFactory.enum.dataUltimaSincronizacao) || new Date();
-                    options.data_hora_sincronizacao = moment(d).format('YYYY-MM-DD') + ' 00:00:00';
+                    options = angular.merge({
+                        data_hora_sincronizacao: moment(d).format('YYYY-MM-DD') + ' 00:00:00',
+                        limit: 1000
+                    }, options);
                     RequestModuloFactory.get('clientes-validacao/index.json', options, function (response) {
                         retorno(response);
                     });

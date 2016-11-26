@@ -1,7 +1,7 @@
 <ion-view title="Lista de Verificación" view-cache="false">
 
-    <ion-header-bar class="bar-light bar-subheader" style="width: 94%; margin-left: 3%;">
-        <input type="search" placeholder="Búsqueda" style="width: 100%;" ng-model="search" ng-model-options='{debounce: 500}' ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" class="full-width">
+    <ion-header-bar class="bar-stable bar-subheader padding-left padding-right" style="background: #F7F1F3; border: none; padding-right: 15px;">
+        <input type="search" placeholder="Búsqueda" style="width: 100%; padding: 0 5px;" ng-model="search" ng-model-options='{debounce: 500}' ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" class="full-width">
         <button ng-if="search.length" class="button button-icon ion-close input-button button-search" ng-click="clearSearch()"> </button>
     </ion-header-bar>
 

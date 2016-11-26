@@ -43,6 +43,7 @@ angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, 
             var retornoLogin = function (retorno) {
                 LoadModuloFactory.hide();
                 if (ValidacaoModuloFactory.is('OK', retorno.status)) {
+                    PdvTable.query('UPDATE pdv SET cor = 0', function (r) {}, []);
                     retorno.data.response.result.senha = $scope.user.senha;
                     $rootScope.setAtualizarUser(retorno.data.response.result);
                     NavegacaoModuloFactory.go(NavegacaoModuloFactory.enum.home);
