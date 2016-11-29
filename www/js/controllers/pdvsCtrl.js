@@ -8,19 +8,22 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
             nome: "PDV's",
             total: 0,
             processado: 0,
-            porcentagem: 0
+            porcentagem: 0,
+            concluido: false
         },
         servicos: {
             nome: "Servicios",
             total: 0,
             processado: 0,
-            porcentagem: 0
+            porcentagem: 0,
+            concluido: false
         },
         tiers: {
             nome: "Los Productos y Niveles",
             total: 0,
             processado: 0,
-            porcentagem: 0
+            porcentagem: 0,
+            concluido: false
         },
         validacaoDownload: {
             nome: "Validação Baixar",
@@ -30,8 +33,6 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
             concluido: false
         }
     };
-
-
 
     $scope.replace = function (dados) {
         angular.forEach(dados, function (v, k) {
@@ -77,7 +78,10 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
                 });
                 $scope.vDownload();
             } else {
-                $scope.registro.validacaoDownload.concluido = true;
+                if ($scope.registro.validacaoDownload.total < 1) {
+                    $scope.registro.validacaoDownload.concluido = true;
+                    $scope.registro.validacaoDownload.porcentagem = 100;
+                }
             }
         });
     };
@@ -93,6 +97,11 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
                     });
                 });
 
+            } else {
+                if ($scope.registro.servicos.total < 1) {
+                    $scope.registro.servicos.concluido = true;
+                    $scope.registro.servicos.porcentagem = 100;
+                }
             }
         });
     };
@@ -108,6 +117,12 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
                     });
                 });
 
+            } else {
+                if ($scope.registro.tiers.total < 1) {
+                    $scope.registro.tiers.concluido = true;
+                    $scope.registro.tiers.porcentagem = 100;
+                }
+                ;
             }
         });
     };
@@ -119,26 +134,28 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
     };
 
     $scope._hide = function () {
-        $scope.registro.pdv.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.pdv.total, $scope.registro.pdv.processado);
+
         if ($scope.registro.pdv.concluido === false) {
+            $scope.registro.pdv.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.pdv.total, $scope.registro.pdv.processado);
             $scope.registro.pdv.concluido = $scope.registro.pdv.porcentagem >= 100 ? true : false;
         }
-        $scope.registro.servicos.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.servicos.total, $scope.registro.servicos.processado);
         if ($scope.registro.servicos.concluido === false) {
+            $scope.registro.servicos.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.servicos.total, $scope.registro.servicos.processado);
             $scope.registro.servicos.concluido = $scope.registro.servicos.porcentagem >= 100 ? true : false;
         }
-        $scope.registro.tiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.tiers.total, $scope.registro.tiers.processado);
         if ($scope.registro.tiers.concluido === false) {
+            $scope.registro.tiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.tiers.total, $scope.registro.tiers.processado);
             $scope.registro.tiers.concluido = $scope.registro.tiers.porcentagem >= 100 ? true : false;
         }
 
-        $scope.registro.validacaoDownload.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.validacaoDownload.total, $scope.registro.validacaoDownload.processado);
         if ($scope.registro.validacaoDownload.concluido === false) {
+            $scope.registro.validacaoDownload.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.validacaoDownload.total, $scope.registro.validacaoDownload.processado);
             $scope.registro.validacaoDownload.concluido = $scope.registro.validacaoDownload.processado >= $scope.registro.validacaoDownload.total ? true : false;
         }
 
         LoadModuloFactory.hide();
         LoadModuloFactory.show();
+
         if ($scope.registro.pdv.concluido === true && $scope.registro.servicos.concluido === true && $scope.registro.tiers.concluido === true && $scope.registro.validacaoDownload.concluido === true) {
             LoadModuloFactory.hide();
             StorageModuloFactory.local.set(StorageModuloFactory.enum.dataUltimaSincronizacao, moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00');
@@ -147,6 +164,7 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
             $scope._atualizar();
         }
     };
+
     ValidacaoModuloFactory.confirm('Esta operación consume tiempo, confirma la ejecución de la misma.', {}, function (r, ok) {
         if (ok === true) {
             LoadModuloFactory.show();

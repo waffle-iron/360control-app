@@ -31,9 +31,9 @@ angular.module('starter').controller('checklistCtrl', function ($rootScope, $sco
                         if (v.sr_status == 1) {
                             v.color = 'button-balanced';
                         } else if (v.sr_status == 2) {
-                            v.color = 'button-assertive';
-                        } else if (v.sr_status == 3) {
                             v.color = 'button-energized';
+                        } else if (v.sr_status == 3) {
+                            v.color = 'button-assertive';
                         }
                         $scope.serve.push(v);
                     })
