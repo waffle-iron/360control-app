@@ -335,6 +335,18 @@
                             }
                         });
                     };
+                    
+                    services.resetar = function (retorno) {
+
+                        var query = "DELETE FROM " + services.table;
+                        services.query(query, function (res) {
+                            if (res !== null) {
+                                retorno(true);
+                            } else {
+                                retorno(false);
+                            }
+                        });
+                    };
 
                     services.query = function (query, retorno, params) {
                         params = params || [];

@@ -9,6 +9,10 @@ angular.module('starter').controller('checklistCtrl', function ($rootScope, $sco
     angular.forEach($rootScope.user.usuarios_servicos, function (v, k) {
         ids.push(v.servico_id);
     });
+    
+    debug('$rootScope.user.usuarios_servicos');
+    debug($rootScope.user.usuarios_servicos);
+    debug(ids);
 
     PdvTable.get($stateParams.id, function (r) {
         if (r !== null) {

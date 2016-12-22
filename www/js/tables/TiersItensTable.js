@@ -20,6 +20,11 @@
                         };
                     };
 
+                    services.resetar = function (r) {
+                        services.setTable();
+                        TableModuloFactory.resetar(r);
+                    };
+                    
                     services.drop = function (r) {
                         services.setTable();
                         TableModuloFactory.drop(r);

@@ -7,7 +7,7 @@
 
     <ion-content padding="true">
         <ion-list>
-            <ion-item collection-repeat="item in dados | filter:{nome:search}" class="item-avatar item-icon-right" ng-href="#/men/checklist/{{item.id}}" collection-item-width="'95%'">
+            <ion-item collection-repeat="item in dados" class="item-avatar item-icon-right" ng-href="#/men/checklist/{{item.id}}" collection-item-width="'95%'">
                 <img ng-src="{{item.url}}">
                 <h2 ng-class="item.styleColor">{{item.nome}}</h2>
                 <p>{{item.endereco}}</p>

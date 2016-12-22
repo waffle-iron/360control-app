@@ -1,4 +1,4 @@
-var _debug = true;
+var _debug = false;
 var debug = function (val) {
     if (_debug === true) {
         if (angular.isObject(val) !== null) {
@@ -20,9 +20,9 @@ var debug = function (val) {
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angularMoment', 'ngLodash'])
         .constant('Config', {
-            url: 'http://cnd360.com/',
+            url: 'http://45.55.132.186:80/',
             api: 'api/',
-            versaoApp: '01.00.01',
+            versaoApp: '01.00.02',
             timeout: 35000,
             database: 'control',
             debug: _debug,

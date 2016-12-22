@@ -23,6 +23,11 @@
                             sincronizado: 'INTEGER(1)'
                         };
                     };
+                    
+                    services.resetar = function (r) {
+                        services.setTable();
+                        TableModuloFactory.resetar(r);
+                    };
 
                     services.drop = function (r) {
                         services.setTable();

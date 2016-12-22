@@ -5,15 +5,13 @@ angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $s
     var fim = false;
     var dados = [];
 
-    //PdvTable.populaBase();
-
     $scope.loadMore = function () {
         if (fim === false) {
             LoadModuloFactory.show();
 
             var options = {order: 'nome ASC'};
             if ($scope.search != '') {
-                options['where'] = 'nome LIKE "%' + $scope.search + '%"';
+                options['where'] = 'nome LIKE "%' + $scope.search + '%" OR endereco LIKE "%' + $scope.search + '%" OR codigo LIKE "%' + $scope.search + '%"';
                 maxLimit = 0;
                 $scope.dados = [];
                 dados = [];
@@ -43,6 +41,7 @@ angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $s
 
     $scope.scrollTop = function () {
         fim = false;
+        $scope.loadMore();
         $ionicScrollDelegate.scrollTop();
     };
 

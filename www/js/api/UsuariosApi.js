@@ -26,6 +26,13 @@ angular.module('starter')
                         retorno(response);
                     });
                 };
+                
+                services.canais = function (options, retorno) {
+                    options.limit = 1000;
+                    RequestModuloFactory.get('usuarios/canais.json', options, function (response) {
+                        retorno(response);
+                    });
+                };
 
                 return services;
             }

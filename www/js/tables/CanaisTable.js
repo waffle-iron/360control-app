@@ -2,21 +2,19 @@
     'use strict';
 
     angular.module('starter')
-            .factory('ValidacaoTable', ['TableModuloFactory', 'ExtraModuloFactory',
-                function (TableModuloFactory, ExtraModuloFactory) {
+            .factory('CanaisTable', ['TableModuloFactory',
+                function (TableModuloFactory) {
 
                     var services = {};
 
                     services.setTable = function () {
-                        TableModuloFactory.table = 'validacao';
+                        TableModuloFactory.table = 'canais';
                         TableModuloFactory.campos = {
                             id: 'INTEGER PRIMARY KEY AUTOINCREMENT',
-                            usuario_id: 'INTEGER(11)',
-                            cliente_id: 'INTEGER(11)',
-                            observacao: 'TEXT',
-                            data: 'VARCHAR(50)',
-                            ativacao: 'INTEGER(1)',
-                            sincronizado: 'INTEGER(1)'
+                            nome: 'VARCHAR(500)',
+                            link: 'VARCHAR(500)',
+                            mensagem: 'VARCHAR(500)',
+                            status: 'INTEGER(1)'
                         };
                     };
 
@@ -24,7 +22,7 @@
                         services.setTable();
                         TableModuloFactory.resetar(r);
                     };
-                    
+
                     services.drop = function (r) {
                         services.setTable();
                         TableModuloFactory.drop(r);
@@ -47,13 +45,7 @@
 
                     services.save = function (o, r) {
                         services.setTable();
-                        services.first({where: 'usuario_id = ' + o.usuario_id + ' AND cliente_id = ' + o.cliente_id}, function (res) {
-                            if (res !== null) {
-                                o.id = res.id;
-                            }
-                            services.setTable();
-                            TableModuloFactory.save(o, r);
-                        });
+                        TableModuloFactory.save(o, r);
                     };
 
                     services.insert = function (o, r) {
@@ -105,6 +97,7 @@
                         services.setTable();
                         TableModuloFactory.query(q, r, p);
                     };
+
 
                     return services;
                 }

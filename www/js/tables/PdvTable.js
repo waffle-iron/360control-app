@@ -15,13 +15,17 @@
                             nome: 'VARCHAR(500)',
                             endereco: 'VARCHAR(500)',
                             cidade: 'VARCHAR(500)',
-                            telefone: 'VARCHAR(50)',
                             tier_id: 'VARCHAR(2)',
                             sincronizado: 'INTEGER(1)',
                             cor: 'INTEGER(1)'
                         };
                     };
 
+                    services.resetar = function (r) {
+                        services.setTable();
+                        TableModuloFactory.resetar(r);
+                    };
+                    
                     services.drop = function (r) {
                         services.setTable();
                         TableModuloFactory.drop(r);

@@ -1,4 +1,4 @@
-angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModuloFactory, $timeout, StorageModuloFactory, moment, ValidacaoTable, ValidacaoApi, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, ServicosTable, ServicosApi, TiersItensApi, TiersItensTable) {
+angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosApi, CanaisTable, ExtraModuloFactory, $timeout, StorageModuloFactory, moment, ValidacaoTable, ValidacaoApi, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, ServicosTable, ServicosApi, TiersItensApi, TiersItensTable) {
 
     var seq = 1;
     var seq2 = 1;
@@ -20,6 +20,13 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
         },
         tiers: {
             nome: "Los Productos y Niveles",
+            total: 0,
+            processado: 0,
+            porcentagem: 0,
+            concluido: false
+        },
+        canais: {
+            nome: "Canais",
             total: 0,
             processado: 0,
             porcentagem: 0,
@@ -127,6 +134,27 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
         });
     };
 
+    $scope.loadCanais = function () {
+        UsuariosApi.canais({}, function (r) {
+            if (ValidacaoModuloFactory.isParcial(r.status)) {
+                $scope.registro.canais.total = r.data.response.paging.count;
+                angular.forEach(r.data.response.result, function (v, k) {
+                    CanaisTable.replace(v, function (r) {
+                        $scope.registro.canais.processado += 1;
+                        $scope.registro.canais.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.canais.total, $scope.registro.canais.processado);
+                    });
+                });
+
+            } else {
+                if ($scope.registro.canais.total < 1) {
+                    $scope.registro.canais.concluido = true;
+                    $scope.registro.canais.porcentagem = 100;
+                }
+                ;
+            }
+        });
+    };
+
     $scope._atualizar = function () {
         $timeout(function () {
             $scope._hide();
@@ -147,6 +175,10 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
             $scope.registro.tiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.tiers.total, $scope.registro.tiers.processado);
             $scope.registro.tiers.concluido = $scope.registro.tiers.porcentagem >= 100 ? true : false;
         }
+        if ($scope.registro.canais.concluido === false) {
+            $scope.registro.canais.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.canais.total, $scope.registro.canais.processado);
+            $scope.registro.canais.concluido = $scope.registro.canais.porcentagem >= 100 ? true : false;
+        }
 
         if ($scope.registro.validacaoDownload.concluido === false) {
             $scope.registro.validacaoDownload.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.validacaoDownload.total, $scope.registro.validacaoDownload.processado);
@@ -156,7 +188,7 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
         LoadModuloFactory.hide();
         LoadModuloFactory.show();
 
-        if ($scope.registro.pdv.concluido === true && $scope.registro.servicos.concluido === true && $scope.registro.tiers.concluido === true && $scope.registro.validacaoDownload.concluido === true) {
+        if ($scope.registro.pdv.concluido === true && $scope.registro.servicos.concluido === true && $scope.registro.tiers.concluido === true && $scope.registro.validacaoDownload.concluido === true && $scope.registro.canais.concluido === true) {
             LoadModuloFactory.hide();
             StorageModuloFactory.local.set(StorageModuloFactory.enum.dataUltimaSincronizacao, moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00');
             ValidacaoModuloFactory.alert('Parabéns! Los datos enviados com éxito.');
@@ -169,9 +201,19 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, ExtraModu
         if (ok === true) {
             LoadModuloFactory.show();
             $scope._atualizar();
-            $scope.loadServicos();
-            $scope.loadTiers();
-            $scope.loadPdvs();
+            ServicosTable.resetar(function (r) {
+                $scope.loadServicos();
+            });
+            TiersItensTable.resetar(function (r) {
+                $scope.loadTiers();
+            });
+            PdvTable.resetar(function (r) {
+                $scope.loadPdvs();
+            });
+            CanaisTable.resetar(function (r) {
+                $scope.loadCanais();
+            });
+
             $scope.vDownload();
         }
     });
