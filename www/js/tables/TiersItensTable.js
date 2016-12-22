@@ -14,6 +14,7 @@
                             tier_id: 'INTEGER(11)',
                             iten_id: 'INTEGER(11)',
                             quantidade: 'INTEGER(3)',
+                            canal_id: 'INTEGER(3)',
                             status: 'INTEGER(1)',
                             item: 'VARCHAR(500)',
                             tier: 'VARCHAR(500)'

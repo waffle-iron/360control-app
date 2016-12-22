@@ -15,7 +15,10 @@
                             nome: 'VARCHAR(500)',
                             endereco: 'VARCHAR(500)',
                             cidade: 'VARCHAR(500)',
-                            tier_id: 'VARCHAR(2)',
+                            tier_id: 'VARCHAR(11)',
+                            canal_id: 'VARCHAR(11)',
+                            carta_acordo: 'VARCHAR(11)',
+                            regional_id: 'VARCHAR(11)',
                             sincronizado: 'INTEGER(1)',
                             cor: 'INTEGER(1)'
                         };

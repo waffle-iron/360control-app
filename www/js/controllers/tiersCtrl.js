@@ -11,6 +11,9 @@ angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraMod
             $scope.pdv = r;
         }
 
+        debug('$scope.pdv');
+        debug($scope.pdv);
+
         TiersItensTable.all({where: 'tier_id = ' + $scope.pdv.tier_id}, function (r) {
             if (r !== null) {
                 angular.forEach(r, function (v, k) {
@@ -26,6 +29,9 @@ angular.module('starter').controller('tiersCtrl', function ($rootScope, ExtraMod
                     d.TiersItenssincronizado = 0;
 
                     d = ExtraModuloFactory.img(d, 'TiersItensfoto', 'TiersItensurl');
+
+                    debug('TiersItensTable');
+                    debug(d);
 
                     TiersItensRespostasTable.first({where: 'cliente_id = ' + $stateParams.id + ' and tiers_item_id = ' + v.id}, function (r) {
                         LoadModuloFactory.show();

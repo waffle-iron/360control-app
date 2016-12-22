@@ -1,4 +1,4 @@
-angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, NavegacaoModuloFactory, UsuariosApi, LoadModuloFactory, ValidacaoModuloFactory, TiersItensRespostasTable, StorageModuloFactory, PdvTable, ServicosTable, UsuariosTable, ValidacaoTable, ServicosRespostasTable, TiersItensTable) {
+angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, NavegacaoModuloFactory, UsuariosApi, LoadModuloFactory, ValidacaoModuloFactory, TiersItensRespostasTable, StorageModuloFactory, PdvTable, ServicosTable, UsuariosTable, ValidacaoTable, ServicosRespostasTable, TiersItensTable, CanaisTable) {
 
     LoadModuloFactory.show();
     PdvTable.init(function (r) {
@@ -7,14 +7,16 @@ angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, 
                 TiersItensTable.init(function (r) {
                     ServicosRespostasTable.init(function (r) {
                         TiersItensRespostasTable.init(function (r) {
-                            ServicosTable.init(function (r) {
-                                if (ValidacaoModuloFactory.isNotNull(StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user))) {
-                                    $rootScope.setAtualizarUser(StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user));
-                                    LoadModuloFactory.hide();
-                                    NavegacaoModuloFactory.go(NavegacaoModuloFactory.enum.home);
-                                } else {
-                                    LoadModuloFactory.hide();
-                                }
+                            CanaisTable.init(function (r) {
+                                ServicosTable.init(function (r) {
+                                    if (ValidacaoModuloFactory.isNotNull(StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user))) {
+                                        $rootScope.setAtualizarUser(StorageModuloFactory.local.getObject(StorageModuloFactory.enum.user));
+                                        LoadModuloFactory.hide();
+                                        NavegacaoModuloFactory.go(NavegacaoModuloFactory.enum.home);
+                                    } else {
+                                        LoadModuloFactory.hide();
+                                    }
+                                });
                             });
                         });
                     });

@@ -20,9 +20,9 @@ var debug = function (val) {
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angularMoment', 'ngLodash'])
         .constant('Config', {
-            url: 'http://45.55.132.186:80/',
+            url: 'http://cnd360.com/',
             api: 'api/',
-            versaoApp: '01.00.02',
+            versaoApp: '01.00.03',
             timeout: 35000,
             database: 'control',
             debug: _debug,
@@ -135,6 +135,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
                     })
                     .state('men.listaDePDVs', {
                         url: '/listaDePDVs',
+                        views: {
+                            'menuContent': {
+                                templateUrl: 'templates/listaDePDVs.html',
+                                controller: 'listaDePDVsCtrl'
+                            }
+                        }
+                    })
+                    .state('men.listaDePDVsCanais', {
+                        url: '/listaDePDVs/:canal_id',
                         views: {
                             'menuContent': {
                                 templateUrl: 'templates/listaDePDVs.html',

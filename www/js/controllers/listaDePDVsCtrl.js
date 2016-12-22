@@ -5,13 +5,24 @@ angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $s
     var fim = false;
     var dados = [];
 
+    debug('$stateParams.canal_id');
+    debug($stateParams.canal_id);
+
     $scope.loadMore = function () {
         if (fim === false) {
             LoadModuloFactory.show();
 
-            var options = {order: 'nome ASC'};
+            var options = {
+                where: '',
+                order: 'nome ASC'
+            };
+
+            if (!!$stateParams.canal_id) {
+                options['where'] += 'canal_id = ' + $stateParams.canal_id;
+            }
+
             if ($scope.search != '') {
-                options['where'] = 'nome LIKE "%' + $scope.search + '%" OR endereco LIKE "%' + $scope.search + '%" OR codigo LIKE "%' + $scope.search + '%"';
+                options['where'] += ' AND (nome LIKE "%' + $scope.search + '%" OR endereco LIKE "%' + $scope.search + '%" OR codigo LIKE "%' + $scope.search + '%") ';
                 maxLimit = 0;
                 $scope.dados = [];
                 dados = [];
@@ -31,7 +42,9 @@ angular.module('starter').controller('listaDePDVsCtrl', function ($rootScope, $s
                     }
                 } else {
                     fim = true;
-                    ExtraModuloFactory.info($scope, 'No se encontraron registros.');
+                    if ($scope.dados.length < 1) {
+                        ExtraModuloFactory.info($scope, 'No se encontraron registros.');
+                    }
                 }
                 LoadModuloFactory.hide();
             });
