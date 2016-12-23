@@ -64,6 +64,7 @@ angular.module('starter').controller('sincronizacaoCtrl', function (UsuariosApi,
             $scope.registro.servicos.total = ValidacaoModuloFactory.count(resp);
             $scope.registro.servicos.concluido = $scope.registro.servicos.total > 0 ? false : true;
             angular.forEach(resp, function (v, k) {
+                v.fechamento = moment(v.fechamento).format('YYYY-MM-DD');
                 debug(v);
                 ServicosRespostasApi.save(v, function (r) {
                     if (ValidacaoModuloFactory.isOk(r.status)) {

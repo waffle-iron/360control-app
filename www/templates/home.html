@@ -15,8 +15,6 @@
             <p style="color:#000000;"></p>
         </div>
 
-        <a ui-sref="men.listaDePDVs" class="button button-dourado button-block">Lista de Verificación</a>
-
         <a ng-repeat="(key, item) in canais" class="button button-dourado button-block" ng-click="consultar(item)" ng-style="{background: (item.status < 1?'#525151':'')}">{{item.nome}}</a>
 
     </ion-content>

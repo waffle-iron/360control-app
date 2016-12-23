@@ -15,7 +15,7 @@
   <allow-intent href="geo:*"/>
   <allow-intent href="*"/>
   <allow-navigation href="*"/>
-  <preference name="loadUrlTimeoutValue" value="700000"/>
+  <preference name="loadUrlTimeoutValue" value="2500"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="SplashScreenDelay" value="2500"/>

@@ -135,13 +135,13 @@
 
                     services.setColor = function (v) {
                         v.styleColor = '';
-                        if (v.cor < 1) {
+                        /*if (v.cor < 1) {
                             v.styleColor = 'preto';
                         } else if (v.cor < 2) {
                             v.styleColor = 'azul';
                         } else {
                             v.styleColor = 'verde';
-                        }
+                        }*/
                         v.url = 'img/p' + v.tier_id + '.png';
                         return v;
                     };
