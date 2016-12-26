@@ -1,6 +1,6 @@
 {
   "name": "360control",
-  "app_id": "",
+  "app_id": "769f2ddd",
   "gulpStartupTasks": [
     "sass",
     "watch"
