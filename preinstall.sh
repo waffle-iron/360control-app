@@ -1,6 +1,15 @@
 npm install
 npm update
 
+bower update angular --force
+bower update angular-animate --force
+bower update angular-moment --force
+bower update angular-sanitize --force
+bower update angular-ui-router --force
+bower update ionic --force
+bower update moment --force
+bower update ng-lodash --force
+bower update ngCordova --force
 bower update --force
 ionic setup sass
 gulp

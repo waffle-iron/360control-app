@@ -1,7 +1,8 @@
 <ion-view title="Lista de Verificación" view-cache="false">
 
     <ion-header-bar class="bar-stable bar-subheader padding-left padding-right" style="background: #F7F1F3; border: none; padding-right: 15px;">
-        <input type="search" placeholder="Búsqueda" style="width: 100%; padding: 0 5px;" ng-model="search" ng-model-options='{debounce: 500}' ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" class="full-width">
+        <button class="button button-icon icon button-balanced button-clear" ng-click="openModal()" ><i class="fa fa-filter" aria-hidden="true"></i></button>
+        <input type="search" placeholder="Búsqueda" style="width: 98%; padding: 0 5px; margin-left: 5px;" ng-model="search" ng-model-options='{debounce: 500}' ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" class="full-width">
         <button ng-if="search.length" class="button button-icon ion-close input-button button-search" ng-click="clearSearch()"> </button>
     </ion-header-bar>
 
@@ -24,3 +25,23 @@
         </ion-infinite-scroll>
     </ion-content>
 </ion-view>
+
+<script id="pdv-filtro.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Filtros</h1>
+      <button class="button button-icon icon button-clear button-positive" ng-click="closeModal()" ><i class="fa fa-times-circle-o" aria-hidden="true"></i></button>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+            <ion-item ng-click="filtrarTier('')">
+                <h2 style="font-size: 30px;">Todos</h2>
+            </ion-item>
+            <ion-item collection-repeat="i in tiers" class="item-avatar item-icon-right" ng-click="filtrarTier(i.id)">
+                <img ng-src="{{i.url}}">
+                <h2 style="font-size: 30px;">{{i.nome}}</h2>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+  </ion-modal-view>
+</script>

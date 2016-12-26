@@ -1,4 +1,4 @@
-angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosApi, CanaisTable, ExtraModuloFactory, $timeout, StorageModuloFactory, moment, ValidacaoTable, ValidacaoApi, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, ServicosTable, ServicosApi, TiersItensApi, TiersItensTable) {
+angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosApi, CanaisTable, ExtraModuloFactory, $timeout, StorageModuloFactory, moment, ValidacaoTable, ValidacaoApi, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, ServicosTable, ServicosApi, TiersItensApi, TiersItensTable, TiersTable, TiersApi) {
 
     var seq = 1;
     var seq2 = 1;
@@ -34,6 +34,13 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosA
         },
         validacaoDownload: {
             nome: "Validação Baixar",
+            total: 0,
+            processado: 0,
+            porcentagem: 0,
+            concluido: false
+        },
+        listaTiers: {
+            nome: "Tiers",
             total: 0,
             processado: 0,
             porcentagem: 0,
@@ -133,6 +140,27 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosA
             }
         });
     };
+    
+    $scope.loadListaTiers = function () {
+        TiersApi.index({}, function (r) {
+            if (ValidacaoModuloFactory.isParcial(r.status)) {
+                $scope.registro.listaTiers.total = r.data.response.paging.count;
+                angular.forEach(r.data.response.result, function (v, k) {
+                    TiersTable.replace(v, function (r) {
+                        $scope.registro.listaTiers.processado += 1;
+                        $scope.registro.listaTiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.listaTiers.total, $scope.registro.listaTiers.processado);
+                    });
+                });
+
+            } else {
+                if ($scope.registro.listaTiers.total < 1) {
+                    $scope.registro.listaTiers.concluido = true;
+                    $scope.registro.listaTiers.porcentagem = 100;
+                }
+                ;
+            }
+        });
+    };
 
     $scope.loadCanais = function () {
         UsuariosApi.canais({}, function (r) {
@@ -175,6 +203,10 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosA
             $scope.registro.tiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.tiers.total, $scope.registro.tiers.processado);
             $scope.registro.tiers.concluido = $scope.registro.tiers.porcentagem >= 100 ? true : false;
         }
+        if ($scope.registro.listaTiers.concluido === false) {
+            $scope.registro.listaTiers.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.listaTiers.total, $scope.registro.listaTiers.processado);
+            $scope.registro.listaTiers.concluido = $scope.registro.listaTiers.porcentagem >= 100 ? true : false;
+        }
         if ($scope.registro.canais.concluido === false) {
             $scope.registro.canais.porcentagem = ExtraModuloFactory.calulcarPorcentagem($scope.registro.canais.total, $scope.registro.canais.processado);
             $scope.registro.canais.concluido = $scope.registro.canais.porcentagem >= 100 ? true : false;
@@ -188,7 +220,7 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosA
         LoadModuloFactory.hide();
         LoadModuloFactory.show();
 
-        if ($scope.registro.pdv.concluido === true && $scope.registro.servicos.concluido === true && $scope.registro.tiers.concluido === true && $scope.registro.validacaoDownload.concluido === true && $scope.registro.canais.concluido === true) {
+        if ($scope.registro.pdv.concluido === true && $scope.registro.servicos.concluido === true && $scope.registro.tiers.concluido === true && $scope.registro.listaTiers.concluido === true && $scope.registro.validacaoDownload.concluido === true && $scope.registro.canais.concluido === true) {
             LoadModuloFactory.hide();
             StorageModuloFactory.local.set(StorageModuloFactory.enum.dataUltimaSincronizacao, moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00');
             ValidacaoModuloFactory.alert('Parabéns! Los datos enviados com éxito.');
@@ -206,6 +238,9 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosA
             });
             TiersItensTable.resetar(function (r) {
                 $scope.loadTiers();
+            });
+            TiersTable.resetar(function (r) {
+                $scope.loadListaTiers();
             });
             PdvTable.resetar(function (r) {
                 $scope.loadPdvs();
