@@ -9,5 +9,8 @@
     "moment": "^2.16.0",
     "ng-lodash": "^0.5.0",
     "ngCordova": "^0.1.27-alpha"
+  },
+  "resolutions": {
+    "angular": "^1.6.1"
   }
 }
