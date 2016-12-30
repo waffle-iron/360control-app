@@ -5,7 +5,8 @@ angular.module('starter')
                     var services = {
                         enum: {
                             login: 'men.login',
-                            home: 'men.home'
+                            home: 'men.home',
+                            enviarDados: 'men.sincronizacao'
                         }
                     };
 

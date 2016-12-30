@@ -22,7 +22,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
         .constant('Config', {
             url: 'http://cnd360.com/',
             api: 'api/',
-            versaoApp: '01.00.04',
+            versaoApp: '01.00.05',
             timeout: 35000,
             database: 'control',
             debug: _debug,

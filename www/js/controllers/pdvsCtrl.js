@@ -1,4 +1,4 @@
-angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosApi, CanaisTable, ExtraModuloFactory, $timeout, StorageModuloFactory, moment, ValidacaoTable, ValidacaoApi, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, ServicosTable, ServicosApi, TiersItensApi, TiersItensTable, TiersTable, TiersApi) {
+angular.module('starter').controller('pdvsCtrl', function ($rootScope, NavegacaoModuloFactory, UsuariosApi, CanaisTable, ExtraModuloFactory, $timeout, StorageModuloFactory, moment, ValidacaoTable, ValidacaoApi, $scope, LoadModuloFactory, PdvTable, PdvsApi, ValidacaoModuloFactory, ServicosTable, ServicosApi, TiersItensApi, TiersItensTable, TiersTable, TiersApi) {
 
     var seq = 1;
     var seq2 = 1;
@@ -140,7 +140,7 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosA
             }
         });
     };
-    
+
     $scope.loadListaTiers = function () {
         TiersApi.index({}, function (r) {
             if (ValidacaoModuloFactory.isParcial(r.status)) {
@@ -222,6 +222,7 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosA
 
         if ($scope.registro.pdv.concluido === true && $scope.registro.servicos.concluido === true && $scope.registro.tiers.concluido === true && $scope.registro.listaTiers.concluido === true && $scope.registro.validacaoDownload.concluido === true && $scope.registro.canais.concluido === true) {
             LoadModuloFactory.hide();
+            StorageModuloFactory.local.set(StorageModuloFactory.enum.hasSincronizacao, 0);
             StorageModuloFactory.local.set(StorageModuloFactory.enum.dataUltimaSincronizacao, moment(new Date()).format('YYYY-MM-DD') + ' 00:00:00');
             ValidacaoModuloFactory.alert('Parabéns! Los datos enviados com éxito.');
         } else {
@@ -229,27 +230,35 @@ angular.module('starter').controller('pdvsCtrl', function ($rootScope, UsuariosA
         }
     };
 
-    ValidacaoModuloFactory.confirm('Esta operación consume tiempo, confirma la ejecución de la misma.', {}, function (r, ok) {
-        if (ok === true) {
-            LoadModuloFactory.show();
-            $scope._atualizar();
-            ServicosTable.resetar(function (r) {
-                $scope.loadServicos();
-            });
-            TiersItensTable.resetar(function (r) {
-                $scope.loadTiers();
-            });
-            TiersTable.resetar(function (r) {
-                $scope.loadListaTiers();
-            });
-            PdvTable.resetar(function (r) {
-                $scope.loadPdvs();
-            });
-            CanaisTable.resetar(function (r) {
-                $scope.loadCanais();
-            });
+    if (StorageModuloFactory.local.get(StorageModuloFactory.enum.hasSincronizacao, 0) === 1) {
+        ValidacaoModuloFactory.alert('No es posible descargar los datos, no hay registro que se enviará al servidor.', 'Advertencia!', function (r) {
+            NavegacaoModuloFactory.go(NavegacaoModuloFactory.enum.enviarDados);
+        });
+    } else {
+        ValidacaoModuloFactory.confirm('Esta operación consume tiempo, confirma la ejecución de la misma.', {}, function (r, ok) {
+            if (ok === true) {
+                LoadModuloFactory.show();
+                $scope._atualizar();
+                ServicosTable.resetar(function (r) {
+                    $scope.loadServicos();
+                });
+                TiersItensTable.resetar(function (r) {
+                    $scope.loadTiers();
+                });
+                TiersTable.resetar(function (r) {
+                    $scope.loadListaTiers();
+                });
+                PdvTable.resetar(function (r) {
+                    $scope.loadPdvs();
+                });
+                CanaisTable.resetar(function (r) {
+                    $scope.loadCanais();
+                });
 
-            $scope.vDownload();
-        }
-    });
+                $scope.vDownload();
+            }
+        });
+    }
+
+
 });

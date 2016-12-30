@@ -28,7 +28,7 @@
                         services.setTable();
                         TableModuloFactory.resetar(r);
                     };
-                    
+
                     services.drop = function (r) {
                         services.setTable();
                         TableModuloFactory.drop(r);
@@ -136,12 +136,16 @@
                     services.setColor = function (v) {
                         v.styleColor = '';
                         /*if (v.cor < 1) {
-                            v.styleColor = 'preto';
-                        } else if (v.cor < 2) {
-                            v.styleColor = 'azul';
-                        } else {
+                         v.styleColor = 'preto';
+                         } else if (v.cor < 2) {
+                         v.styleColor = 'azul';
+                         } else {
+                         v.styleColor = 'verde';
+                         }*/
+
+                        if (v.cor >= 2) {
                             v.styleColor = 'verde';
-                        }*/
+                        }
                         v.url = 'img/p' + v.tier_id + '.png';
                         return v;
                     };

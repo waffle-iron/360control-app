@@ -50,6 +50,7 @@ angular.module('starter').controller('loginCtrl', function ($scope, $rootScope, 
                     PdvTable.query('UPDATE pdv SET cor = 0', function (r) {}, []);
                     retorno.data.response.result.senha = $scope.user.senha;
                     $rootScope.setAtualizarUser(retorno.data.response.result);
+                    StorageModuloFactory.local.set(StorageModuloFactory.enum.hasSincronizacao, 0);
                     NavegacaoModuloFactory.go(NavegacaoModuloFactory.enum.home);
                 } else {
                     ValidacaoModuloFactory.alert('No se pudo iniciar sesión, inténtelo de nuevo.');
