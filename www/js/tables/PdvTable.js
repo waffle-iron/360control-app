@@ -20,7 +20,8 @@
                             carta_acordo: 'VARCHAR(11)',
                             regional_id: 'VARCHAR(11)',
                             sincronizado: 'INTEGER(1)',
-                            cor: 'INTEGER(1)'
+                            cor: 'INTEGER(1)',
+                            imagem: 'VARCHAR(500)'
                         };
                     };
 
@@ -153,7 +154,7 @@
                         } else if (v.cor == 3) {
                             v.styleColor = 'vermelho';
                         }
-                        v.url = 'img/p' + v.tier_id + '.png';
+                        v.url = 'img/' + v.imagem;
                         return v;
                     };
 

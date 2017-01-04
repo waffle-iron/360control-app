@@ -11,7 +11,8 @@
                         TableModuloFactory.table = 'tiers';
                         TableModuloFactory.campos = {
                             id: 'INTEGER PRIMARY KEY AUTOINCREMENT',
-                            nome: 'VARCHAR(500)'
+                            nome: 'VARCHAR(500)',
+                            imagem: 'VARCHAR(500)'
                         };
                     };
 
@@ -113,7 +114,7 @@
                     };
 
                     services.setImage = function (v) {
-                        v.url = 'img/p' + v.id + '.png';
+                        v.url = 'img/' + v.imagem;
                         return v;
                     };
 
