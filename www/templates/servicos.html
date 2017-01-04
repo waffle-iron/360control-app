@@ -1,6 +1,6 @@
 <ion-view title="{{serve.nome}}" view-cache="false">
 
-    
+
     <ion-content padding="true">
         <widget-clientes></widget-clientes>
         <h3 style="color:#000000; text-align:center;">{{serve.nome}}</h3>
@@ -45,11 +45,14 @@
                     <option value="3" ng-selected="dados.status == 3">Rechazado</option>
                 </select>
             </label>
-            <div class="spacer" style="height: 21px;"></div>
-            <a ng-click="salvar()" class="button button-balanced  button-block">Guardar</a>
-            <div class="spacer" style="height: 21px;"></div>
         </form>
+        <div class="spacer" style="height: 25px;"></div>
     </ion-content>
+    <div class="bar bar-footer">
+        <div class="button-bar bar-balanced" ng-click="salvar()">
+            <a class="button">Guardar</a>
+        </div>
+    </div>
 </ion-view>
 
 <script id="my-foto.html" type="text/ng-template">

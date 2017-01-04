@@ -1,4 +1,4 @@
-var _debug = false;
+var _debug = true;
 var debug = function (val) {
     if (_debug === true) {
         if (angular.isObject(val) !== null) {
@@ -22,7 +22,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'angular
         .constant('Config', {
             url: 'http://cnd360.com/',
             api: 'api/',
-            versaoApp: '01.00.05',
+            versaoApp: '01.00.06',
             timeout: 35000,
             database: 'control',
             debug: _debug,

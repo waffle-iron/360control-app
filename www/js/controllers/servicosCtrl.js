@@ -1,4 +1,4 @@
-angular.module('starter').controller('servicosCtrl', function ($rootScope, ExtraModuloFactory, $ionicModal, FileModuloFactory, ValidacaoModuloFactory, ValidacaoTable, moment, $scope, $stateParams, ServicosTable, ServicosRespostasTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
+angular.module('starter').controller('servicosCtrl', function (StorageModuloFactory, $rootScope, ExtraModuloFactory, $ionicModal, FileModuloFactory, ValidacaoModuloFactory, ValidacaoTable, moment, $scope, $stateParams, ServicosTable, ServicosRespostasTable, PdvTable, LoadModuloFactory, CameraModuloFactory) {
 
 
     LoadModuloFactory.show();
@@ -103,7 +103,7 @@ angular.module('starter').controller('servicosCtrl', function ($rootScope, Extra
                     LoadModuloFactory.hide();
                     ValidacaoModuloFactory.alert('Guardado de datos com éxito.');
                 });
-
+                StorageModuloFactory.local.set(StorageModuloFactory.enum.hasSincronizacao, 1);
             } else {
                 LoadModuloFactory.hide();
                 ValidacaoModuloFactory.alert('Error al guardar los datos, vuelva a intentarlo.');

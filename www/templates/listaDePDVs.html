@@ -10,7 +10,7 @@
         <ion-list>
             <ion-item collection-repeat="item in dados" class="item-avatar item-icon-right" ng-href="#/men/checklist/{{item.id}}" collection-item-width="'95%'">
                 <img ng-src="{{item.url}}">
-                <h2 ng-class="item.styleColor">{{item.nome}}</h2>
+                <h2 class="{{item.styleColor}}">{{item.nome}}</h2>
                 <p>{{item.endereco}}</p>
                 <i class="icon ion-ios-arrow-forward icon-accessory"></i>
             </ion-item>

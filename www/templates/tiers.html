@@ -1,6 +1,6 @@
 <ion-view title="Registro Fotográfico" view-cache="false">
 
-    
+
     <ion-content padding="true">
 
         <widget-clientes></widget-clientes>
@@ -21,12 +21,13 @@
                 </label>
             </div>
         </form>
-
-        <div class="spacer" style="height: 21px;"></div>
-        <a ng-click="salvar()" class="button button-balanced  button-block">Guardar</a>
-        <div class="spacer" style="height: 21px;"></div>
-
+        <div class="spacer" style="height: 25px;"></div>
     </ion-content>
+    <div class="bar bar-footer">
+        <div class="button-bar bar-balanced" ng-click="salvar()">
+            <a class="button">Guardar</a>
+        </div>
+    </div>
 </ion-view>
 
 <script id="my-foto.html" type="text/ng-template">

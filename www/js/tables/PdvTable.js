@@ -123,28 +123,35 @@
 
                     services.atualizarCor = function (id, corAtual) {
                         var cor = 0;
-                        if (corAtual < 1) {
-                            cor = 1;
-                        } else if (corAtual <= 2) {
-                            cor = 2;
-                        }
-                        services.query('UPDATE pdv SET cor=' + cor + ' WHERE id = ' + id, function (r) {
+                        services.query('SELECT MAX(status) as status FROM servicos_respostas WHERE cliente_id = ' + id + ' ORDER BY status ASC limit 1', function (r) {
+                            if (r !== null) {
+                                var len = r.rows.length;
+                                if (len > 0) {
+                                    var v = r.rows.item(0);
 
+                                    cor = v.status;
+                                    debug('v.status');
+                                    debug(v.status);
+
+                                }
+
+                                services.query('UPDATE pdv SET cor=' + cor + ' WHERE id = ' + id, function (r) {
+
+                                }, []);
+                            }
                         }, []);
                     };
 
                     services.setColor = function (v) {
-                        v.styleColor = '';
-                        /*if (v.cor < 1) {
-                         v.styleColor = 'preto';
-                         } else if (v.cor < 2) {
-                         v.styleColor = 'azul';
-                         } else {
-                         v.styleColor = 'verde';
-                         }*/
-
-                        if (v.cor >= 2) {
+                        debug('services.setColor');
+                        debug(v.cor);
+                        v.styleColor = 'preto';
+                        if (v.cor == 1) {
                             v.styleColor = 'verde';
+                        } else if (v.cor == 2) {
+                            v.styleColor = 'amarelo';
+                        } else if (v.cor == 3) {
+                            v.styleColor = 'vermelho';
                         }
                         v.url = 'img/p' + v.tier_id + '.png';
                         return v;
